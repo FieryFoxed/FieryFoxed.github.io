@@ -63,12 +63,75 @@
         }
     </style>
     <script>
-        // JavaScript code remains the same
+        function search() {
+            var input, sections, section, i, content, txtValue, searchTerm;
+            input = document.getElementById('searchBar');
+            searchTerm = input.value.toLowerCase();
+            sections = document.getElementsByClassName('section');
+            
+            for (i = 0; i < sections.length; i++) {
+                section = sections[i];
+                content = section.getElementsByClassName('content')[0];
+                txtValue = content.textContent || content.innerText;
+                
+                // Perform fuzzy search using Levenshtein distance algorithm
+                if (fuzzyMatch(txtValue.toLowerCase(), searchTerm)) {
+                    section.style.display = '';
+                } else {
+                    section.style.display = 'none';
+                }
+            }
+        }
+        
+        // Function to calculate Levenshtein distance between two strings
+        function levenshteinDistance(a, b) {
+            if (a.length === 0) return b.length;
+            if (b.length === 0) return a.length;
+        
+            var matrix = [];
+        
+            // Initialize matrix
+            for (var i = 0; i <= b.length; i++) {
+                matrix[i] = [i];
+            }
+        
+            for (var j = 0; j <= a.length; j++) {
+                matrix[0][j] = j;
+            }
+        
+            // Calculate Levenshtein distance
+            for (var i = 1; i <= b.length; i++) {
+                for (var j = 1; j <= a.length; j++) {
+                    if (b.charAt(i - 1) === a.charAt(j - 1)) {
+                        matrix[i][j] = matrix[i - 1][j - 1];
+                    } else {
+                        matrix[i][j] = Math.min(
+                            matrix[i - 1][j - 1] + 1, // substitution
+                            matrix[i][j - 1] + 1,     // insertion
+                            matrix[i - 1][j] + 1      // deletion
+                        );
+                    }
+                }
+            }
+        
+            return matrix[b.length][a.length];
+        }
+        
+        // Function to perform fuzzy search
+        function fuzzyMatch(str, searchTerm) {
+            var words = str.split(' ');
+            for (var i = 0; i < words.length; i++) {
+                if (levenshteinDistance(words[i], searchTerm) <= 2) {
+                    return true;
+                }
+            }
+            return false;
+        }
     </script>
 </head>
 <body>
     <div id="navbar">
-        <h1>Welcome to the Gneral Archive</h1>
+        <h1>Welcome to the General Archive</h1>
         <div class="nav-buttons">
             <button onclick="window.location.href='index.html'">Home</button>
         </div>
@@ -76,43 +139,30 @@
     </div>
     
     <div class="section">
-        <h2>Section 1</h2>
+        <h2>Multiverse Segments</h2>
         <div class="content">
-            <p>This is the content of section 1.</p>
+            <p>Current Documented segments of the multiverse</p>
             <ul>
-                <li>Item 1</li>
-                <li>Item 2</li>
-                <li>Item 3</li>
+                <a href="ArchiveEx/crystalverse.html"><li>Crystalverse</li></a>
+                <li>Reaververse</li>
+                <li>Pentiverse</li>
+                <li>Universe</li>
+                <li>Multiverse</li>
             </ul>
         </div>
     </div>
-    
+
     <div class="section">
-        <h2>Section 2</h2>
+        <h2>People</h2>
         <div class="content">
-            <p>This is the content of section 2.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </div>
-    </div>
-    
-    <div class="section">
-        <h2>Section 3</h2>
-        <div class="content">
-            <p>This is the content of section 3.</p>
-            <table>
-                <tr>
-                    <th>Header 1</th>
-                    <th>Header 2</th>
-                </tr>
-                <tr>
-                    <td>Data 1</td>
-                    <td>Data 2</td>
-                </tr>
-                <tr>
-                    <td>Data 3</td>
-                    <td>Data 4</td>
-                </tr>
-            </table>
+            <p>Current Documented Entities</p>
+            <ul>
+                <li><a href="">DMM Associates</a></li>
+                <li><a href="">Hell Entities</a></li>
+                <li><a href="">Kouzlo Entities</a></li>
+                <li><a href="">Minor Multiverse Entities</a></li>
+                <li><a href="">TMM Associates</a></li>
+            </ul>
         </div>
     </div>
 </body>

@@ -12,6 +12,25 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
 <style>
+.search-bar {
+      margin: 8px 0;
+      box-sizing: border-box;
+      border: 3px solid #ccc;
+    }
+
+.search-bar input[type=text] {
+  padding: 6px;
+  border: none;
+  margin-top: 8px;
+  margin-right: 16px;
+  font-size: 17px;
+  width: 80%;
+}
+
+#searchResults {
+  margin-top: 20px;
+}
+
 body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
 .w3-bar-block .w3-bar-item {padding:20px}
 
@@ -82,7 +101,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
 </head>
 <body>
 <div class="header">
-    <h2>Header</h2>
+ 
 
 <!-- Sidebar (hidden by default) -->
 <nav class="w3-sidebar w3-bar-block w3-card w3-top w3-xlarge w3-animate-left" style="display:none;z-index:2;width:40%;min-width:300px" id="mySidebar">
@@ -99,7 +118,6 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
 <div class="w3-top">
   <div class="w3-white w3-xlarge" style="max-width:1200px;margin:auto">
     <div class="w3-button w3-padding-16 w3-left" onclick="w3_open()">☰</div>
-    <div class="w3-right w3-centeredT" style="padding: 3px;"><input class="topnav" type="text" placeholder="Search.."></div>
     <div class="w3-padding-16">TMM CO Database</div>
   </div>
 </div>
@@ -202,6 +220,15 @@ function w3_open() {
 function w3_close() {
   document.getElementById("mySidebar").style.display = "none";
 }
+
+function handleInput() {
+      var searchText = document.getElementById('searchText').value;
+
+      // Perform the search logic here
+      
+      var resultsContainer = document.getElementById('searchResults');
+      resultsContainer.innerHTML = "Results for: " + searchText;
+    }
 </script>
 
 </body>

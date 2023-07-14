@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TMM Archive</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        #navbar {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        #navbar h1 {
+            margin: 0;
+            display: inline;
+        }
+        
+        #navbar .nav-buttons {
+            display: flex;
+            align-items: center;
+        }
+        
+        #navbar .nav-buttons button {
+            margin-left: 10px;
+            background-color: transparent;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 5px 10px;
+            border-radius: 3px;
+            transition: background-color 0.3s;
+        }
+        
+        #navbar .nav-buttons button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        #searchBar {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            padding: 5px;
+            width: 300px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .section {
+            margin-bottom: 20px;
+        }
+        
+        .content {
+            margin-left: 20px;
+        }
+
+        .padding{
+            padding: 10px;
+        }
+    </style>
+    <script>
+        function search() {
+            var input, sections, section, i, content, txtValue, searchTerm;
+            input = document.getElementById('searchBar');
+            searchTerm = input.value.toLowerCase();
+            sections = document.getElementsByClassName('section');
+            
+            for (i = 0; i < sections.length; i++) {
+                section = sections[i];
+                content = section.getElementsByClassName('content')[0];
+                txtValue = content.textContent || content.innerText;
+                
+                // Perform fuzzy search using Levenshtein distance algorithm
+                if (fuzzyMatch(txtValue.toLowerCase(), searchTerm)) {
+                    section.style.display = '';
+                } else {
+                    section.style.display = 'none';
+                }
+            }
+        }
+        
+        // Function to calculate Levenshtein distance between two strings
+        function levenshteinDistance(a, b) {
+            if (a.length === 0) return b.length;
+            if (b.length === 0) return a.length;
+        
+            var matrix = [];
+        
+            // Initialize matrix
+            for (var i = 0; i <= b.length; i++) {
+                matrix[i] = [i];
+            }
+        
+            for (var j = 0; j <= a.length; j++) {
+                matrix[0][j] = j;
+            }
+        
+            // Calculate Levenshtein distance
+            for (var i = 1; i <= b.length; i++) {
+                for (var j = 1; j <= a.length; j++) {
+                    if (b.charAt(i - 1) === a.charAt(j - 1)) {
+                        matrix[i][j] = matrix[i - 1][j - 1];
+                    } else {
+                        matrix[i][j] = Math.min(
+                            matrix[i - 1][j - 1] + 1, // substitution
+                            matrix[i][j - 1] + 1,     // insertion
+                            matrix[i - 1][j] + 1      // deletion
+                        );
+                    }
+                }
+            }
+        
+            return matrix[b.length][a.length];
+        }
+        
+        // Function to perform fuzzy search
+        function fuzzyMatch(str, searchTerm) {
+            var words = str.split(' ');
+            for (var i = 0; i < words.length; i++) {
+                if (levenshteinDistance(words[i], searchTerm) <= 2) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    </script>
+</head>
+<body>
+    <div id="navbar">
+        <h1>Welcome to the TMM Archive</h1>
+        <div class="nav-buttons">
+            <button onclick="window.location.href='index.html'">Home</button>
+        </div>
+        <input type="text" id="searchBar" placeholder="Search..." onkeyup="search()">
+    </div>
+     
+    <div class="section">
+        <div class="content">
+            <table>
+                <tr>
+                    <th>1-0</th>
+                    <th><a href="/ArchiveEx/CrystalverseSegments/azule.html">Azule</a></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="content">
+            <table>
+                <tr>
+                    <th>1-1</th>
+                    <th><a href="">Celen</a></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="content">
+            <table>
+                <tr>
+                    <th>1-2</th>
+                    <th><a href="">Spay</a></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="content">
+            <table>
+                <tr>
+                    <th>1-3</th>
+                    <th><a href="">REDACTED</a></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="content">
+            <table>
+                <tr>
+                    <th>1-4</th>
+                    <th><a href="">REDACTED</a></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="content">
+            <table>
+                <tr>
+                    <th>1-5</th>
+                    <th><a href="">REDACTED</a></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="content">
+            <table>
+                <tr>
+                    <th>1-6</th>
+                    <th><a href="">REDACTED</a></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="content">
+            <table>
+                <tr>
+                    <th>1-7</th>
+                    <th><a href="">Z.P.</a></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="content">
+            <table>
+                <tr>
+                    <th>1-8</th>
+                    <th><a href="">REDACTED</a></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="content">
+            <table>
+                <tr>
+                    <th>1-9</th>
+                    <th><a href="">Metropolis</a></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="content">
+            <table>
+                <tr>
+                    <th>1-10</th>
+                    <th><a href="">Kouzlo</a></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="content">
+            <table>
+                <tr>
+                    <th>1-11</th>
+                    <th><a href="">REDACTED</a></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="content">
+            <table>
+                <tr>
+                    <th>1-12</th>
+                    <th><a href="">REDACTED</a></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="content">
+            <table>
+                <tr>
+                    <th>1-13</th>
+                    <th><a href="">REDACTED</a></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="content">
+            <table>
+                <tr>
+                    <th>1-14</th>
+                    <th><a href="">REDACTED</a></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="content">
+            <table>
+                <tr>
+                    <th>1-15</th>
+                    <th><a href="">REDACTED</a></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="content">
+            <table>
+                <tr>
+                    <th>1-16</th>
+                    <th><a href="">REDACTED</a></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="content">
+            <table>
+                <tr>
+                    <th>1-17</th>
+                    <th><a href="">Mountains</a></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+    
+    <div class="section">
+        <div class="content">
+            <table>
+                <tr>
+                    <th>1-18</th>
+                    <th><a href="">REDACTED</a></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="content">
+            <table>
+                <tr>
+                    <th>1-19</th>
+                    <th><a href="">REDACTED</a></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="content">
+            <table>
+                <tr>
+                    <th>1-20</th>
+                    <th><a href="">REDACTED</a></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="content">
+            <table>
+                <tr>
+                    <th>1-21</th>
+                    <th><a href="">REDACTED</a></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="content">
+            <table>
+                <tr>
+                    <th>1-22</th>
+                    <th><a href="">REDACTED</a></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="content">
+            <table>
+                <tr>
+                    <th>1-23</th>
+                    <th><a href="">New New York</a></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="content">
+            <table>
+                <tr>
+                    <th>1-24</th>
+                    <th><a href="">REDACTED</a></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="content">
+            <table>
+                <tr>
+                    <th>1-25</th>
+                    <th><a href="">REDACTED</a></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="content">
+            <table>
+                <tr>
+                    <th>1-26</th>
+                    <th><a href="">REDACTED</a></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="content">
+            <table>
+                <tr>
+                    <th>1-27</th>
+                    <th><a href="">REDACTED</a></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="content">
+            <table>
+                <tr>
+                    <th>1-28</th>
+                    <th><a href="">REDACTED</a></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="content">
+            <table>
+                <tr>
+                    <th>1-29</th>
+                    <th><a href="">REDACTED</a></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="content">
+            <table>
+                <tr>
+                    <th>1-30</th>
+                    <th><a href="">REDACTED</a></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
