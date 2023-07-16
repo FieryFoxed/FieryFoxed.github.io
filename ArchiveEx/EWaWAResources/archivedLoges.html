@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TMM Archive</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        #navbar {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        #navbar h1 {
+            margin: 0;
+            display: inline;
+        }
+        
+        #navbar .nav-buttons {
+            display: flex;
+            align-items: center;
+        }
+        
+        #navbar .nav-buttons button {
+            margin-left: 10px;
+            background-color: transparent;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 5px 10px;
+            border-radius: 3px;
+            transition: background-color 0.3s;
+        }
+        
+        #navbar .nav-buttons button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        #searchBar {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            padding: 5px;
+            width: 300px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .section {
+            margin-bottom: 20px;
+        }
+        
+        .content {
+            margin-left: 20px;
+        }
+    </style>
+    <script>
+        function search() {
+            var input, sections, section, i, content, txtValue, searchTerm;
+            input = document.getElementById('searchBar');
+            searchTerm = input.value.toLowerCase();
+            sections = document.getElementsByClassName('section');
+            
+            for (i = 0; i < sections.length; i++) {
+                section = sections[i];
+                content = section.getElementsByClassName('content')[0];
+                txtValue = content.textContent || content.innerText;
+                
+                // Perform fuzzy search using Levenshtein distance algorithm
+                if (fuzzyMatch(txtValue.toLowerCase(), searchTerm)) {
+                    section.style.display = '';
+                } else {
+                    section.style.display = 'none';
+                }
+            }
+        }
+        
+        // Function to calculate Levenshtein distance between two strings
+        function levenshteinDistance(a, b) {
+            if (a.length === 0) return b.length;
+            if (b.length === 0) return a.length;
+        
+            var matrix = [];
+        
+            // Initialize matrix
+            for (var i = 0; i <= b.length; i++) {
+                matrix[i] = [i];
+            }
+        
+            for (var j = 0; j <= a.length; j++) {
+                matrix[0][j] = j;
+            }
+        
+            // Calculate Levenshtein distance
+            for (var i = 1; i <= b.length; i++) {
+                for (var j = 1; j <= a.length; j++) {
+                    if (b.charAt(i - 1) === a.charAt(j - 1)) {
+                        matrix[i][j] = matrix[i - 1][j - 1];
+                    } else {
+                        matrix[i][j] = Math.min(
+                            matrix[i - 1][j - 1] + 1, // substitution
+                            matrix[i][j - 1] + 1,     // insertion
+                            matrix[i - 1][j] + 1      // deletion
+                        );
+                    }
+                }
+            }
+        
+            return matrix[b.length][a.length];
+        }
+        
+        // Function to perform fuzzy search
+        function fuzzyMatch(str, searchTerm) {
+            var words = str.split(' ');
+            for (var i = 0; i < words.length; i++) {
+                if (levenshteinDistance(words[i], searchTerm) <= 2) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    </script>
+</head>
+<body>
+    <div id="navbar">
+        <h2>Welcome to the EWaWA Logs</h2>
+        <div class="nav-buttons">
+            <button onclick="window.location.href='../../index.html'">Home</button>
+        </div>
+        <input type="text" id="searchBar" placeholder="Search..." onkeyup="search()">
+    </div>
+    
+    <div class="section">
+        <h1>EWaWA Logs</h1>
+        <div class="content">
+            <h1>Presented by high archivist Beck</h1>
+            <b>Log 1:</b>
+            <p>–Eggman's Chambers</p>
+            <p style="padding: 10px;">
+                Subjects Jeremy and REDACTED find themselves responsible for the overseeing of the archmage Eggman. After making their way to the archmages chambers, they find the mage asleep, and seize the opportunity to explore the surrounding chambers. Jeremy finds a magic wand,while REDACTED locates a book to identify the wand. However before REDACTED has the opportunity to inspect the book, Eggman wakes from his slumber. General care routine starts, as Eggman begins eating eggshells and playing with toys strewn across the floor. Jeremy and REDACTED take their time to be gentle, walking on eggshells (literally), in an attempt to not provoke the archmage. Unfortunately, Eggman loses his composure, at which point Eggman casts a spell at random and a white light engulfs the room.
+            </p>
+
+            <p>–-Southern Demon Isles</p>
+            <p style="padding: 10px;">
+                Jeremy and REDACTED find themselves in a combination of planes and wooded landscapes surrounded by farmland. Nearby they spot a small farming house, and with their newfound purpose of attempting to locate Eggman, head towards it in search of clues. There they meet up with a farmer, who tips them in on a few details on which direction the archmage might be heading, but more importantly the direction of the next town. Assuming that Eggman would most likely head towards civilization, the two set off down the dirt path that pushes through the wheatfields. However at the end of the wheat fields, as the path deviates by the forest, the two spot eggman heading into the woods.
+            </p>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="content">
+            <b>Log 2:</b>
+            <p>–Woods on the Southern Demon Isles</p>
+            <p style="padding: 10px;">
+                Jeremy and REDACTED set chase attempting to catch up to Eggman, to which they catch up to them after a brief run through the forest. They take a moment to try to calm down Eggman, however at that very moment two stone giants wander out from a displaced dungeon underneath a cave face nearby. The three engage the creatures in combat. While Jeremy’s and REDACTED’s attacks seem less than effective on the creature, Eggman's random use of magic yields varying effects, coating the area in a thick green slime, summoning dead giants, granting trees life and limbs, and summoning one of Energy’s angels. With this new entourage the group easily dispatches the stone giant. 
+            </p>
+            <p style="padding: 10px;">
+                In a bout of desperation at the chaotic and destructive nature of eggman, Jermey asks the angel if it can use its divine power to make Eggman less volatile. The angel agrees in exchange for it being able to return to its original realm. The angel uses its ability to restore Eggman's Wisdom and Intelligence from 0 to their original stats, then quickly departs. Eggman is stunned for a moment as he realizes he is freed from his self imprisonment. Eggman determines that since he will never be able to fully imprison himself, and that he is unwilling to kill himself, that he will return to his original desire of world domination. As a gesture of goodwill to Jeremy for helping him attain this revelation and in exchange for the wand, he offers Jeremy one use of his wish spell. 
+            </p>
+        </div>
+    </div>
+    
+    <div class="section">
+        <div class="content">
+            <b>Log 3:</b>
+            <p>–Woods on the Southern Demon Isles</p>
+            <p style="padding: 10px;">
+                Jeremy, who is in patronage to a dark entity at the cost of immense suffering, seized this opportunity using the spell to wish for his own power. The wish spell, in turn, sets Jeremy to the status of godhood. After this concludes, Eggman departs, leaving Jeremy and REDACTED alone in the wooded clearing. The two take this time to read the book on the wand, revealing the wand to be the only artifact known by mortals to possess power rivaling that of Eggmans. This artifact comes at a cost however, often destroying itself and the user when its power is matched. Later in the book it also reveals that something created with Eggman's power or the wand's power, can be refined by divine forces on divine ground to replicate the artifact. The two, assuming that Eggman will become a problem in the future, make it their goal to replicate the wand to end the archmage, immediately setting upon the magical living trees that eggman accidentally created during the stone giant fight. They collect 8 logs from the creature, then set their sights on finding holy lands. 
+            </p>
+            <p style="padding: 10px;">
+                While the two are attempting to determine their next course of action, a small party of adventures come across them. Gavin Elmose the Paladin, Saveth the Monk, Da’rak the Ranger, and Jill the Clerik. Conversation breaks out between the small group, after a brief conversation, the party agrees to lead the two back to Sharlon stride. On the journey back to town, Jeremy attempts to convince Gavin to assist them in their quest to end Eggman. Gavin is hesitant right off the bat, but says he will ask his party members their opinion and get back to him on the proposal.  
+            </p>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="content">
+            <b>Log 4:</b>
+            <p>–Sharlon Stride on the Southern Demon Isles</p>
+            <p style="padding: 10px;">
+                The small group makes their way back to town, to which the party departs, telling Jeremy to meet them in the tavern after dark to discuss the future of their relationship. Jeremy and REDACTED take time to explore the town. REDACTED gets coaxed into an alleyway by an old woman offering them a gift. The elderly woman gives them a small pouch with a single discolored bean inside. The two, confused by this gesture, set out to find a general store. Finding that there is only one in town. The dusty, small, wooden shack contains rusty low quality tools runned by a similar wrinkly old woman. The three speak briefly, before the old woman leads REDACTED into the backroom. While in the back REDACTED hears soft whispering coming from all around them, before a small bag is placed into their hands. Jeremy and REDACTED leave the building after not being able to locate the woman again. Inside the small pouch are instructions on how to cook and prepare the bean along with seasoning; the instructions appear more ritualistic than standard cooking instructions. 
+            </p>
+            <p style="padding: 10px;">
+                The two head to the beach and set up a tiny cooking station, following the instructions to a tee. Using two of the magical logs, they start a fire and begin cooking the bean. After nothing happens, REDACTED eats the cooked bean, immediately falling unconscious. REDACTED awakes alone in a gray void, surrounded by a flat plane in all directions. After a few hours of wandering they come across a raised structure. Approaching it they find a winding staircase going around the circumference of the mound. At the top they find a woman clad in silken robes, chained to multiple segments of the structure. Around the centered area where the woman was chained, massive white jagged pillars rise from the mound, each engraved with unidentifiable runic symbols. The woman begs REDACTED to free her, to which after some convincing, REDACTED pulls out their revolver and shoots the chains holding the woman. They snap after some ammunition and effort, allowing the woman to stand. The woman thanks REDACTED and offers her powers as a reward for her liberation. REDACTED accepts this gift to which they awake on the beach next to Jeremy. Their revolver glowing a light teal from its seams.
+            </p>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="content">
+            <b>Log 5:</b>
+            <p>–Sharlon Stride on the Southern Demon Isles</p>
+            <p style="padding: 10px;">
+                (REDACTED’s soul leaves Expempieta, plot hole corrected by authority of Beck)
+            </p>
+            <p style="padding: 10px;">
+                While sitting on the beach contemplating recent events, a crazy disheveled man comes out of an alleyway, stabbing REDACTED multiple times before grabbing all of their belongings and running back into the darkness. At the same time, off in the distance a rowboat begins sinking, to which a tall woman carrying a large anchor jumps from the sinking vessel landing close to Jeremy. Jeremy, stunned from the sheer insanity of recent activities, simply gazes between the multiple points of interest.
+            </p>
+            <p style="padding: 10px;">
+                Note from HQ: (Beck, I know I gave you full authority to do with this realm as you see fit, however this is going too far… please take your job more seriously in the future -Bas)
+            </p>
+            <p style="padding: 10px;">
+                The tall woman looks from Jeremy to the corpse leaking oil next to them, back to the water, then back at Jeremy. She introduces herself as Ruby the pirate, after brief pleasantries and explanations, the two set out for vengeance. They head the direction that the crazy man was heading in, following a trail of blood and mysterious powder, to an alleyway. Another elderly woman sat in the alleyway, and after some brief convincing, pointed out some loose stones in the wall. Removing them the two find a staircase leading down into dark underground tunnels. Making their way through the darkness the two come across two individuals who appear to be on some body enhancing substances, exhibiting extreme strength and endurance beyond typical for villagers living in underground tunnels. However the two dispatch them quickly and continue their travels until they come across a large open room, their target standing in the middle of the clearing. They go to approach the individual, but find themselves flanked by more of the enhanced people. The man at the center of the room gives a brief explanation, divulging the two that they found a plant off in the wilderness, that when consumed in powder form would grant them inhuman strength. Fighting occurs, and while it is a struggle, the two pacify the man with minimum injuries. The two remaining individuals are apprehended but let go after Jeremy gives them the command to worship him, the two enhanced people scurry off into different segments of the tunnel. Ruby and Jeremy collect the belongings stolen from their late comrade and return to the surface.
+            </p>
+            <a href="#cult">    Cult Of Jeremy</a>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="content">
+            <b>Log 6:</b>
+            <p>–Sharlon Stride on the Southern Demon Isles</p>
+            <p style="padding: 10px;">
+                Jermey and Ruby head to the tavern the party requested Jeremy’s presence at. When they arrive, Jeremy enters the salt encrusted run down establishment to a dreary scene. The exterior matches the interior, revealing a run down sleepy little establishment. The most lively part being the party gingerly sipping on ale. Jeremy approached, the party slowly forming a frown. The party explains that they feel they are simply too inexperienced for such a task, they feel like they would miss home, and that Jeremy is too underprepared for them to feel comfortable joining him in his journey. However they'll trai, and if Jeremy returns with more resources they will join the fight in the future. Jeremy leaves defeated, however both him and Ruby set on a new task, finding a sea vessel capable of traveling. They both set to the docs attempting to find resources on the subject. Most sailors are either too busy to stop and chat or are already out at sea working, however after a while one does stop and explain the merchant owns most if not all the ships on the docks. Outside of a few small fishing vessels, they won't be able to strike a deal or procure a vessel without speaking directly to the merchant who runs the town. They both set out heading up the hill to the large gated manor the merchant lives in. Making it to the front door they are greeted by the manors butler, who explains they will need a meeting reservation to meet with the merchant, and after setting up a time Jeremy and Ruby leave to wait for their meeting time.
+            </p>
+            <p style="padding: 10px;">
+                After returning the next day, they are let in by the butler, and lead up a lavishly decorated manor. In stark contrast to the rest of the rundown town, the manor looks at home to a large city aristocratic abode. Passing multiple maids and guards, the small group makes their way to the merchants office. The office matches the rest of the manor, and sitting at the desk on the other side of the room sits a slender, well dressed, sleazy looking man. Pleasantries are offered by Ruby and Jermey, however they are not reciprocated by the merchant, who instead refers to Jeremy as a beast and borderline ignores Ruby. Dismissively the merchant asks why they are bothering him, to which the two lay down their requests of a vessel. The merchant laughs them off and rudely dismisses them. The two in turn work, to intimidate the merchant, this works extremely effectively. After some stern words, the merchant folds to their demands, offering them one of the smallest merchant vessels available. The two leave satisfied but not before using prestidigitation to make the merchant smell for an hour. On their way out the two work to recruit the staff of the merchant, recruiting two mercenaries and a handful of maids. 
+            </p>
+            <a href="">    Crew of the Santiano</a>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="content">
+            <b>Log 7:</b>
+            <p>–Sharlon Stride on the Southern Demon Isles</p>
+            <p style="padding: 10px;">
+                The group makes their way over to their new ships, finding it to be a two story merchant vessel with a capacity of 14 people and a decent amount of goods in the cargo hold. The two load up their new crew and take stock of the supplies they have, but before embarking, decide they want to hire a couple new hands and find a cleric for medical endeavors. The two, with only a couple gold for each of them, set out each with separate goals. Jeremy heads to the orphanage wanting to find some children he can bring on board to hopefully teach the art of the sea and hopefully raise in his image, while Ruby heads to the local church in an attempt to find a cleric. Jeremy is successful in his search recruiting and adopting the oldest children available being Calvin and Sarah. Ruby is also successful, procuring the service of a relatively cheap cleric for the ship. On the way back to the ship, Jeremy runs into a lavishly dressed white tiefling, who stops him and exchanges pleasantries. She divulges that she happens to be a cleric, to which in exchange for ferrying her goods and a small amount of gold she agrees to join them on their ship. Ruby makes her way to the Santiana and loads the cleric with his belongings onto the ship, to which Jeremy arrives with his cleric in tow. The two excuse themselves off to the side and Ruby explains rather frustrated that she already found the ship a cleric, and after a brief back and forth, agree that they will ditch the woman. They return the female cleric, who was already in the process of arranging the loading of her goods onto the ship. Ruby explains that they are planning on spending some of the night prepping the ship and that they would leave in the morning. The female cleric agrees to this plan and leaves to find lodging while the crew continues loading her goods onto the ship. After they finish loading everything on board, the crew immediately disembarks in the night leaving the female cleric behind. 
+            </p>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="content">
+            <b>Log 8:</b>
+            <p>–Demon Seas</p>
+            <p style="padding: 10px;">
+                The crew takes a couple weeks on the seas adjusting to the lifestyle. Ruby takes time distributing and documenting rations, setting up schedules, and teaching the mercenaries how to navigate. Jeremy takes time attempting to bleed the ideas of his religion and ideology into the minds of the crew, there are a few members that bite and slowly over time they begin to believe his teachings. During this time Ruby discovers that the goods they picked up from the cleric are filled with valuable materials, magic items, weapons, and a slew of other valuables. They determine once they get to the mainland they will work to obtain a full map of the world and sell off the obtained goods.
+            </p>
+            <p style="padding: 10px;">
+                After a couple weeks, the crew locates a small island off in the distance. After some brief debating the crew decides to dock and take time to explore the island. Ruby and Jeremy more specifically take a small rowboat driven by the mercenaries, and begin to explore the beach. After finding nothing of interest, they decide to head into the jungle segment of the island. After exploring longer they hear a whispering voice telling them to get down and hide. Heading the warning the two jump into the bushes, finding the voices to be a disheveled man and woman warning them to be as still and quiet as possible. After waiting a few seconds, a sphynx wanders through the foliage in front of them. After the beast leaves the man and woman introduce themselves and explain the island itself is a massive titan that sinks ships that get too close, they were in this situation but barely managed to get to island, dodging the resident sphynx and foraging for about a week. Jeremy and Ruby explain that they have a ship just off shore and determine that it's just a matter of time before the island comes to life and destroys it. After determining the coast was clear, the four make a break for the shore, and after breaking through the tree line find the sphynx also breaking through the leaves after them. Ruby commands the other three to get to the row boat while she holds off the sphinx, engaging it in combat and using magic to impede its progress. After slowing the beast, Ruby uses magic and pure strength to propel herself towards the row boat. After making it a decent distance from the shoreline the sphinx continues its ravenous pursuit, while at the same time the island begins to rise from the water, creating a massive sinking hole of sand and water enderneigh it. As the island reveals itself to be a giant titan crab, the emergence of rushing water impedes both the rowboats' movement and Ruby’s progress. Before Ruby can sink into the watery void, she manages to propel herself out again with the assistance of Jeremy’s magic, returning to the row boat. The members of the rowboat do their best to move against the rushing water, avoid the massive slamming claws from the titan slamming all around them, and impede the movement of the sphinx. Ruby commands the Santiana’s crew to get the boat moving, before attempting to freeze the sphinx in the water. This maneuver is successful, but right as the spell is completed the massive claw of the crab slams on the tiny row boat, sending its contents flying everywhere. Ruby sinks with her anchor, coaxing the sphinx to chase her under the water, while using magic to assist the other members of the rowboat back to the ship. With the assistance of Jeremy, the crew of the Santiana, and Ruby’s magic they manage to successfully get everyone back on board. Ruby uses more spells to propel herself back on board the ship leaving the crab in their dust. While on board the sphinx manages to catch up, but is quickly dispatched by the crew.
+            </p>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="content">
+            <b>Log 9:</b>
+            <p>–Demon Seas</p>
+            <p style="padding: 10px;">
+                The crew continues their life at sea, however a couple days after the previous encounter, they spot a wispy battleship moving quickly towards their ship on course to pull up next to the Santiana. As the ship gets closer the crew adjusts their course and speed in an attempt to evade the ship while ruby uses magic to head over to the other ship. On the ship two prisoners sit in holding cells, they have been stuck on the ship for a few days now after being apprehended from their original ship by the pirates that own the ship they are currently on. As Ruby approaches she spots the same cleric they left behind in Sharlonstride. At this point the wispy ship has made its way close enough to the Santiana, and all members aboard the pirate unleash a torrent of magical attacks at the Santiana and Ruby. A battle ensues, during which the two individuals by means of convincing a crew member to give them the key, make their way out of their containers. As this process takes place Ruby shoots through the main deck and begins ripping holes through the bottom of the ship, recruiting the two in the process of destroying the ship. On the Santiana, Jeremy and the other crew members work to make hasty repairs, return fire, steer the boat, and put out the fire caused by the wall of fire generated in the battle. The mages on the pirate ship work to begin a ritual to hold their boat in place, preventing it from sinking from the damage Ruby was causing to the underside of the boat. Realizing this, the three on the lower deck return to the surface, targeting the circle of mages working to keep the boat afloat. Ruby takes the following time to confront the captain of the ship and the cleric, and after a brief altercation continues sinking the ship. One of the lower deck members sees the ship is sinking and uses magic to teleport back to the ship, while the other begins to fly using their celestial heritage. Ruby goes down with the ship, but uses her abilities to fly through the water returning to the Santiana. While on board it is revealed that in the ensuing combat, the crew lost their cleric and the brother of the stranded two picked up on the island, the other half completely inconsolable at the loss of her brother. The two members caged at the bottom of the other ship introduce themselves as Dall the cleric and Santiago the bard. Having lost two and then gaining another two, the crew assesses the damages, then searches the waters for survivors of the enemy ship. Finding nothing, the Santiana continues their voyage to the mainland.
+            </p>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="content">
+            <b>Log 10:</b>
+            <p>–Southern Demon Capital</p>
+            <p style="padding: 10px;">
+                The Santiana, spotting a modest size city on the shore harboring multiple docks, finds a vacant spot and begins tying up their vessel. Almost immediately, they are stopped by an official who attempts to ascertain who they are and what they are doing without proper documentation. The man reveals himself to be the port master's assistant, to which after a brief conversation Santiago convinces the man that he is a friend of the port master and is here to greet his old friend, however more importantly that they were here to sell crates of goods. The portmasters assistant tells the crew to wait at their ship, while he goes off to confirm their story and set up a meeting time with the portmaster. The four members wait patiently by their vessel and after a brief time the portmasters assistant returns with a handful of guards, the portmasters assistant tells them that the portmaster was interested in setting up a meeting right away, and that they sent out guards to collect their cargo and bring it to the meeting so that they can discuss selling it right away. Following the portmasters assistant through the dock, town area, and over to the postmaster's office they notice that the area around the office building is covered in barracks and more importantly that a giant statue of the cleric they took the goods from was sitting right next to the path they were taking to the office in an outside corridor. The group is escorted to a waiting room briefly before being let into the postmaster's office. After entering, Santiago immediately jumps into action greeting the portmaster like an old friend, which surprisingly is reciprocated by the portmaster. This goes on for a few minutes while Santiago struggles to keep up the facade, before the portmaster reveals that his friend Santiago was the one responsible for taking out his left eye, and subsequently banished from the southern demon isles. The facade crumbling, Santiago comes clean about the situation, the portmaster gets straight to the point after this event. He explains to the party that the goods they are trying to sell have been identified as the contents of a resupply mission personally taken on by one of their best generals Dogsna. The portmaster explains that they are seizing the cargo, the ship, and will be arresting the party unless they repay their aggression. The demands are simple, the Santiana is required to reobtain Dogsna and transport her along with the cargo to the northern demon isles. The group agrees in exchange for their freedom, the privilege of using some of the magic items they stole from Dogsna, and a map of the world. The group leaves the office with a new mission in hand, find Dogsna. 
+            </p>
+            <p style="padding: 10px;">
+                The crew takes some time to themselves, Jeremy heads out with the children and Sammy the maid to go explore the shops, Santiago performs on a street corner and then returns a dementia patient back to their home, Ruby sets out trying to find a method to locate Dogsna, and Dall winds up perusing an underground beast ring.
+            </p>
+            <p style="padding: 10px;">
+                Ruby finds herself in the Magic Emporium and speaks to the imp that runs the establishment. When explaining that what she's looking for is some type of scrying device, the imp leads her into the back room. When walking into the back room it's revealed to be a massive factory/warehouse covered head to toe in imps and magic items. She is led over to a scrying eye which she purchases from the owner in exchange for her completing a task for him. The owner gives her a small pouch full of crystals and asks her to put them into an empty building in a new town. Agreeing to these terms she leaves with the scrying eye and crystals in hand.
+            </p>
+            <p style="padding: 10px;">
+                Dall makes his way to a sketchy alleyway, to which he knocks on a door hidden in the wall. After a brief conversation with the bouncer he is let into a dark underground tunnel. At the end he comes to a massive underground cavern full of cages containing mythical creatures and beasts. The owner leads him through different cages making sales pitched the entire time. After he comes to a magical cage with a floating blue cat, he knocks the owner unconscious and steals his key, unlocking the cat's cage and bolting with it. He makes his way back to the ship talking with the magical cat.
+            </p>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="content">
+            <b>Log 11:</b>
+            <p>–Southern Demon Capital</p>
+            <p style="padding: 10px;">
+                The crew continues taking time to themselves before departing, each splitting off into their own groups. Ruby returns to the port master's office trying to find resources to better the effects of the scrying eye, Dall returns to the shady establishment, Santiago sets out to recruit an apprentice, and Jeremy spends more time with his adopted children.
+            </p>
+            <p style="padding: 10px;">
+                Ruby makes their way to the port masters office, where she is stopped by the guards at the front, after briefly explaining her intentions, one of the guards explains that there might be a painting of Dogsna she can take to use in her spell. The guard leads her through the building over to a massive 30 ft  X 40 ft oil painting of Dogsna sitting in the middle of one of the building hallways. After explaining there simply isn't room on the Santiana for a painting that big, the two set to cutting Dogsna’s face from the painting, netting Ruby a 9 ft X 9 ft square of Dogsna’s painting. Ruby leaves the establishment satisfied.
+            </p>
+            <p style="padding: 10px;">
+                Jeremy, while walking around with his children, winds up striking up conversation with a mysterious figure who introduces himself as Zefros. Jeremy, after some conversation, invites Zefros to the Santiana. The small group heads back to the ship.
+            </p>
+            <p style="padding: 10px;">
+                Santiago makes their way back to an open part of the market and begins to perform again, after a small crowd forms and dissipates after the performance, a young boy is left standing in front awestruck by the performance. Santiago shows the kid some magic tricks, in which the kid introduces himself as Conrad, and then Santiago offers a position as his apprentice to Conrad. Conrad seems eager to but explains he lives with his aunt and uncle and needs to check with them first. Conrad leads Santiago to his home, a small adobe hut on a hill, the interior a dirt floor with few decorations. Conrad begins speaking to the air in front of him explaining the situation to the room, to which after he concludes gets excited and beams to Santiago that he has gotten permission to go with Santiago. The two head back to the ship.
+            </p>
+            <p style="padding: 10px;">
+                Dall makes his way back to the establishment, but is immediately stopped by the bouncer. However the magical cat with him shrinks the bouncer down to an inch tall, and the two walk down into the establishment. Dall works quickly to free a merwolf from their aquarium cage, relinquishing the keys to the cages to them, allowing them to systematically free all the creatures from their cages. After a short period the various lycanthropes and other creatures thank Dall and make their way out of the establishment. Dall returns to the ship.
+            </p>
+            <p style="padding: 10px;">
+                All crew members return to the docks just in time to witness the freed creatures brutally dispatch the guards guarding a warship, before seizing the vessel and immediately setting sail away from the continent.
+            </p>
+            <p style="padding: 10px;">
+                The crew loads everyone onto the Santiana and departs back to Sharlonstride in search for Dogsna.
+            </p>
+            <a href="#warwolves">    Warwolves Storyline</a>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="content">
+            <b>Log 12:</b>
+            <p>–Demon Seas</p>
+            <p style="padding: 10px;">
+                Once again the crew adjusts to their life at sea, Dall pledges himself to Jeremy. Ruby uses the scrying eye everyday to keep tabs on Dogsna’s location, revealing she's fallen into a relatively strong depression.
+            </p>
+            <p style="padding: 10px;">
+                However after nearly a month the crew comes across a small island, to which they recognize a wrecked ship on its shore. Along the center of the island a few crew members along with Dogsna are unloading supplies from the shipwreck. It had been a few days since the scrying spell had worked, however they were still a month away from Sharlonstride, so the crew decided to approach the island with caution. Dall and Jeremy opted to take their crab submarine and embark onto the shore of the island, while Ruby and Santiago went inland to approach the scene, if anything went wrong Ruby would send them a message to come help. After Ruby and Santiago landed on the island and began approaching the crates and crew both members immediately became infatuated with hallucinations emitting from behind the crate. At that very moment the crew moved towards them attached to thick spiky tentacles, and began coaxing them towards the center of the mass of crates. Tentacles lashed out impeding any chance of escape should they break the illusions. After getting dangerously close to their demise, Ruby manages to break free and set off a signal alerting Dall and Jeremy and assisting Santiago in breaking free from his illusions. Zefros also jumps from the ship and begins using his blood magic to assist in any way he can. The group make quick work hacking away at the tentacles, destroying its corpse puppets, and making their way to the center of the creature sending a barrage of attacks directly into its maw. The creature is dispatched with no casualties, so the crew return to the Santiana without checking the area. Dall, however, barely notes a pouch of platinum coins in the carcass of one of the crates.
+            </p>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="content">
+            <b>Log 13:</b>
+            <p>–Demon Seas</p>
+            <p style="padding: 10px;">
+                The crew continues their life on the sea as normal, however while they are just a month or so away from Sharlonstride, they come across a very small merchant vessel who appears to be hailing them. The Santiana and her crew approaches the vessel with caution. They are greeted by the sight of a small number of men in the process of throwing a large black crate covered in silver chains overboard. When Santiago approaches, he is met by the captain of the vessel, who explains that the ship and their power source is damaged. The crate that they are about to throw overboard is a powerful magical artifact that is stored in a magical crate, both of which are using immense power from the core of the ship. If they don't throw it overboard or get rid of it, the whole ship will start sinking. After a brief back and forth the crew agrees to take on the responsibility of delivering the crate to the group that purchased it in the Northern Demon Isles. Ruby, in addition, also offers to take some time to help repair the damages that they already obtained from a previous pirate attack. Moving through the vessel, Ruby finds that the ship is actually 11 stories, and possesses immense magical properties. The reconstruction commences, the exchange of documents and the crate takes place, and the Santiana is on their way.
+            </p>
+            <p style="padding: 10px;">
+                The silver chains fall from the crate, revealing a jade and Fluxium statue of a dragon holding a gold orb. The crew takes multiple attempts to understand the nature of the artifact, figuring out that it's holding some sort of entity, however they make no progress in attempting to use it.
+            </p>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="content">
+            <b>Log 14:</b>
+            <p>–Sharlonstride</p>
+            <p style="padding: 10px;">
+                The crew docks back at Sharlonstride, and once again all crew members split into their own tasks. Santiago begins performing on the dock, Dall and his magical cat take a walk through town, Jeremy takes the children back to visit their orphanage, and Ruby heads to the tavern to confront Dogsna.
+            </p>
+            <p style="padding: 10px;">
+                Santiago makes very little progress with attracting attention, however a shifty old man gives them a sardine, then discretely heads off in the direction of the merchant's manor to warn him of the returning of the Santiana.
+            </p>
+            <p style="padding: 10px;">
+                Jeremy finds that the orphanage is completely boarded up when he gets there, and from a cursory investigation with his construct, finds vague eviction notices strewn across the building.
+            </p>
+            <p style="padding: 10px;">
+                Dall, while chatting and resting at a fountain with his magical cat, is coaxed into a dark alleyway by a hooded figure. The figure leads him to some loose stones in the wall, and down a dark tunnel into the underground. After some time of walking the figure leads him to a large underground circular room where multiple robbed figures converge around a large crude stone statue of Jeremy. The figures immediately crowd around Dall preaching their interpretations of Jeremy in an attempt to convert Dall to their religion. Dall reveals to the cultists that he actually already follows the words of Jeremy, and is actually a traveling companion of his. The cultists immediately burst into a fervent raucous, bowing and begging Dall to regale them with the actions and teachings of Jeremy. Dall is reluctant to preach any words, and instead reveals that Jeremy is back on the island, and he knows where he is. The cultist goes into a frenzy begging him to take them to Jeremy, collecting offerings for Jeremy, and grabbing parchment to document the coming visage. Dall leads them out of the tunnels and heads towards the center of town.
+            </p>
+            <p style="padding: 10px;">
+                Ruby heads over to the tavern. In this time Santiago and Jeremy managed to catch up to Ruby fairly quickly. Taking some precaution, Ruby uses spells to ensure that Dogsna wouldn't be able to escape giving that that be her course of action. She enters the dusty run down building to find Dogsna, drunk with her head down, wallowing in misery. The three sit across from Dogsna, to which Dogsna immediately scowls and begins to berate them with her words but stops short, clearly lacking the energy. The group explains that they have been hired to escort her back to the Demon Capital, then to the Northern Demon isles. After some back and forth, Dogsna agrees as long as the group goes out and saves her crew. Dogsna explains that in an act of desperation, she sent her crew on a suicide mission for the merchant, if they were successful they would be able to take a small vessel and travel back to the Demon Capital. The group agrees to these terms, and leave Dogsna to sober up.
+            </p>
+            <p style="padding: 10px;">
+                When the three leave the tavern they are met by a mob of nearly 20 people in robes carrying treasure, kneeling and fervently praising Jeremy’s name. Immediately Dall explains that these are Jeremy’s subjects, to which the cultists confirm and explain that Jeremy’s presence in the underground tunnel, the word he spoke to their old leader, and his command of devotion was the only thing that assisted them in breaking their addiction to the drug they became dependent on. They explained that the drugs would kill anyone who used them if they didn't take more of the drug or exercise a hellish amount after quitting the substance. Their devotion to him and his words pushed the cultists to be able to complete their hellish experience and rebuild their underground society with him as their focus instead of the drugs. Moreover they explained that they uncovered a dungeon while expanding the tunnels and have brought offerings for him. The cultists then pilled hundreds of thousands of value in gold, luxury items, and magical artifacts in front of the group. Jeremy decides that with this money, his influence, and the cultists he would be able to seize the town from the merchant and rebuild it both better and in his image. Rallying his forces and giving a speech to amass the willing townsfolk, he forms a small mob and sets out to the merchants manor. Ruby however heads back to the ship.
+            </p>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="content">
+            <b>Log 15</b>
+            <p>–Sharlonstride</p>
+            <p style="padding: 10px;">
+                The mob makes their way to the manor, immediately being met with two mercenaries and a locked front gate. The two mercenaries call out the other members of their defense, the Houndmaster, four more mercenaries, and a tall lanky creature. Battle immediately ensues with both sides clashing. Santiago manages to convince one of the mercenaries to switch sides, while the group makes quick work of the other mercenaries. The tall lanky entity begins reaching for the members of the mob however, inflicting intense necrosis on any victim they touch, thick gold chains strapped to every limb swaying as they move. The group dispatch the creature, which dies unceremoniously, and the group sets on disarming the Houndmaster.
+            </p>
+            <p style="padding: 10px;">
+                During this time, Ruby returned to the pile of treasure. Locating an empty building, they placed one of the magic crystals and shut the door. The building slowly fazed into an elegant magic shop, the same one in Southern Demon Capital. Entering, she immediately purchases a set of bags of holding with money she collected from the pile, then starts shoveling treasure into them. Finishing, she makes her way over to the merchants manor.
+            </p>
+            <p style="padding: 10px;">
+                At this point the group has the Houndmaster pinned, however the well dressed butler that led them through the manor originally walks down the staircase at that moment. A brief conversation ensues, where the group attempts to convince the butler to join them, but he holds steadfast in his loyalty. The butler readies himself for combat and throws the Houndmaster a new weapon. Ruby at this point flies in and joins the combat. After each side exchanges a few blows. Ruby uses a magic item from the pile to materialize a hole underneath the two enemies, then proceeds to empty all the gold from the bags of holding into the hole. To ensure the elimination of the targets, she also summons an elephant with a magic item on top of the pile crushing the two under immense weight. The group waits with bated breath, before Butler's battered and crooked hand bursts from the pile, but falls limp. Confirming the butler's death the mob makes their way up to the office of the merchant.
+            </p>
+            <p style="padding: 10px;">
+                Bursting into the office of the merchant, they find him gingerly going over paperwork head to toe in magical artifacts, most importantly a necklace containing a large orange gem wraps around his neck. Once again a brief conversation ensues, where the group attempts to get him to abdicate ownership of his possessions peacefully. The merchant laughs off this sentiment and goads the group on. Battle ensues but no matter what the mob throws at the merchant, everything misses. The merchant dances through attacks and fluidly dodges every attack, landing lethal blows and throwing insults in turn. The merchant offers a brief monologue then slits the throat of one of the cultists. Taking life so easily, and observing the best placed attack to be an elephant head butting the ceiling (which was still off by a foot or so), he grows bored and calls out to his assistant. The small mousewolf, who the merchant refers to as Mously, sits silently in one of the corners. The merchant requests her to bring in the tall lanky creature. Mously, slyly and defiantly informs him that against his instructions, she sent it into battle earlier with little assistance. At this the merchant turns pale and begins pleading with the orange amulet, however at this point, every step he took he seemed to stumble or trip. The amulet broke from around his neck, the orange gem falling to the floor. At this point, the mob set onto him tearing off his magic items and pulling him out of the building, whatever effect the amulet had wearing off. Leaving the party alone in the office.
+            </p>
+            <p style="padding: 10px;">
+                The group, scavenging whatever they could, pulled keyes, magic items, documents, and the orange gem. Ruby specifically holds the gem in her hands before seizing. From her perspective she is transported mentally to an audience with Fortuna the core ten god with the domain of probability. There Fortuna offers to make Ruby its vessel, offering all of its power in exchange for making the world pay for what it put his best friend through. Ruby, being the only member of the group that wasn't there at the time of slaying the tall lanky creature, was the best candidate for holding the power of Fortuna. Ruby initially declines the offer, however Fortuna offers her all the treasures collected in their conquest, Ruby then accepts. The orange gem dissolves in her hands, while an orange light travels up her veins and through her body, changing her eyes to be a light orange color.
+            </p>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="content">
+            <b>Log 16:</b>
+            <p>–Sharlonstride</p>
+            <p style="padding: 10px;">
+                The group makes their way out of the manor. Multiple things stand out to everyone, first the townsfolk have commenced with a witch style burning of the merchant, the sky had visibly darkened despite it being just past mid day, and pools of black ichor were now materializing randomly on the ground. Ruby at this point, exhausted from absorbing a god, passed out. Jeremy organizes a small group of cultists to carry her back to the ship while he and the group stays for finalizations. Off to the side the group notices that Dogsna has approached and has been observing from a distance, next to her is a small woman adorned in silk religious garbs, and a massive 11 foot tall woman wearing a teal dress. As conversation breaks out, the small woman introduces herself as Bib and The tall woman introduces herself as L'appel du vide or Lady Vide. Dogsna simply comment on the group destroying the mainland's main source of magical artifacts and weapons. Bib goes on to explain that she is the archivist of religion and that Jeremy’s cult isn't properly documented within her archive. So the group splits off once again. Jeremy stays with Bib to fill out religious paperwork, Santiago immediately asks Lady Vide to drinks, and Dall sets his eyes on talking to Dogsna.
+            </p>
+            <p style="padding: 10px;">
+                Santiago heads to the tavern and orders drinks, fortunately finding Ambrosia in a sealed crate that the bartender offers him for an exuberant price. Santiago and Vide make their way to a rooftop to enjoy the drink under the stars. While conversation breaks out, the subject slowly shifts to the topic of devotion, where Vide finds that Santiago pledges allegiance to no religion. After explaining that she is the goddess of the void, and offering Santiago a spot in her devotees, Santiago agrees. The two head into the forest in search of an adequate setting for a coupling and devotion ritual to commence.
+            </p>
+            <p style="padding: 10px;">
+                Dall begins attempting to chat with Dogsna, and invites her to drinks. Dogsna is reluctant at first, however, based on previous recommendations and the fact Dall is similar to her late husband, she caves in and accepts. The two head to the tavern, and immediately set to drinking, Dogsna throwing back two bottles quickly while Dall attempts to keep pace. Dall, for his credit, keeps pace despite his size and relative lack of experience drinking. After a while of drunken talk, the two decide to take a walk down by the beach. During this time, Dall confesses to Dogsna and offers for her to join him permanently on the ship. She declines lightly, explaining that she's still in servitude to the demon isles, and has a war to get back to. Citing the awkward shift in tone, she says the entire event has been a mistake, and she's still not ready to start again. The two part ways in the night.
+            </p>
+        </div>
+    </div>
+    
+    <div class="section">
+        <div class="content">
+            <b></b>
+            <p></p>
+            <p style="padding: 10px;">
+            
+            </p>
+        </div>
+    </div>
+    
+</body>
+</html>
