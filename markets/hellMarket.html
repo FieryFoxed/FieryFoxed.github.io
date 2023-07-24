@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TMM Archive</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        
+        #navbar {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        #navbar h1 {
+            margin: 0;
+            display: inline;
+        }
+        
+        #navbar .nav-buttons {
+            display: flex;
+            align-items: center;
+        }
+        
+        #navbar .nav-buttons button {
+            margin-left: 10px;
+            background-color: transparent;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 5px 10px;
+            border-radius: 3px;
+            transition: background-color 0.3s;
+        }
+        
+        #navbar .nav-buttons button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        #searchBar {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            padding: 5px;
+            width: 300px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .large-box {
+            background-color: #fff;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: block; /* Stacked vertically */
+        }
+        
+        .large-box-title {
+            font-size: 20px;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        
+        .sections-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section {
+            width: 200px;
+            background-color: #fff;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: inline-block; /* Stacked horizontally */
+            vertical-align: top; /* Align boxes at the top */
+            transition: box-shadow 0.3s;
+        }
+        
+        .section:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .section-title {
+            font-size: 18px;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        
+        .content {
+            display: none;
+        }
+        
+
+        .section:hover .content {
+            display: block;
+            margin-top: 10px;
+        }
+        
+        .section .content p {
+            margin: 0;
+        }
+
+        .container {
+            display: flex; /* Use flexbox to stack the boxes horizontally */
+        }
+
+        .section-wide {
+            flex: 1; /* Make the boxes take up equal space */
+            max-width: auto; /* Set the maximum width for each box */
+            background-color: #fff;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s;
+        }
+
+        .section-wide:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .section-wide:hover .content {
+            display: block;
+            margin-top: 10px;
+        }
+
+        .section-wide:hover .contentL {
+            display: block;
+            margin-top: 10px;
+        }
+
+        .section-wide .content p {
+            margin: 0;
+        }
+
+    </style>
+    <script>
+        // Function to calculate Levenshtein distance between two strings
+        function levenshteinDistance(a, b) {
+            if (a.length === 0) return b.length;
+            if (b.length === 0) return a.length;
+        
+            var matrix = [];
+        
+            // Initialize matrix
+            for (var i = 0; i <= b.length; i++) {
+                matrix[i] = [i];
+            }
+        
+            for (var j = 0; j <= a.length; j++) {
+                matrix[0][j] = j;
+            }
+        
+            // Calculate Levenshtein distance
+            for (var i = 1; i <= b.length; i++) {
+                for (var j = 1; j <= a.length; j++) {
+                    if (b.charAt(i - 1) === a.charAt(j - 1)) {
+                        matrix[i][j] = matrix[i - 1][j - 1];
+                    } else {
+                        matrix[i][j] = Math.min(
+                            matrix[i - 1][j - 1] + 1, // substitution
+                            matrix[i][j - 1] + 1,     // insertion
+                            matrix[i - 1][j] + 1      // deletion
+                        );
+                    }
+                }
+            }
+        
+            return matrix[b.length][a.length];
+        }
+        
+        // Function to perform fuzzy search
+        function fuzzyMatch(str, searchTerm) {
+            var words = str.split(' ');
+            for (var i = 0; i < words.length; i++) {
+                if (levenshteinDistance(words[i], searchTerm) <= 2) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    </script>
+</head>
+<body style="background-image: url(../images/redVoid.jpg);">
+    <div id="navbar">
+        <h1>Hell Market</h1>
+        <div class="nav-buttons">
+            <button onclick="window.location.href='../index.html'">Home</button>
+            <button onclick="window.location.href='index.html'">Augemts</button>
+            <button onclick="window.location.href='index.html'">Weapons</button>
+            <button onclick="window.location.href='index.html'">Structures</button>
+        </div>
+        <input type="text" id="searchBar" placeholder="Search..." onkeyup="search()">
+    </div>
+    
+    <div class="sections-container">
+        <div class="large-box" style="background-color: rgb(113, 57, 9);">
+            <div class="large-box-title" style="text-align: center;"><h1 style="color: silver;">Death INC.</h1></div>
+            <div class="large-box-title" style="margin-top: 10px;">
+                <p style="font-size: 25px; color: silver;">Death INC Equipment</p>
+            </div>
+            <div class="section" style="background-color: rgb(120, 73, 32);">
+                <div class="section-title" style="color: silver;">Reaper Cloak</div>
+                <div class="content">
+                    <p style="color: rgb(255, 255, 255);">Requires Attunment -</p>
+                    <p style="color: rgb(255, 255, 255); margin-top: 20px;">A long black cloak trimed with maroon fabric, on the left breast is the sigil of Death INC.</p>
+                    <p style="color: rgb(255, 255, 255); margin-top: 20px;">While wearing the Reaper Cloak, all souls within a mile radius of the wearer will remain in status, appearing as multi colored whispy orbs hovering above the ground.</p>
+                    <p style=" text-align: right; color: rgb(255, 255, 255);">1000 SC</p>
+                </div>
+            </div>
+
+            <div class="section" style="background-color: rgb(120, 73, 32);">
+                <div class="section-title" style="color: silver; ">Collection Void</div>
+                <div class="content">
+                    <p style="color: rgb(255, 255, 255); margin-top: 20px;">A small black orb coated in metal, during the production process the user can request designs or special functionality for their Collection Void.</p>
+                    <p style="color: rgb(255, 255, 255); margin-top: 20px;">The Collection Void has a radius of 30ft, any stationary souls in that radius will slowly float to the Collection Void and store themselves in the container. The Collection may only hold 500 souls at a time, however upon returning to hell, the souls will convert to soul coins and will spill out of the orb unless an account is taken with Death INC. in which case the souls will be transported there from the orb.</p>
+                    <p style=" text-align: right; color: rgb(255, 255, 255);">300 SC</p>
+                </div>
+            </div>
+
+            <div class="section" style="background-color: rgb(120, 73, 32);">
+                <div class="section-title" style="color: silver;">Reaper Scythe</div>
+                <div class="content">
+                    <p style="color: rgb(255, 255, 255); margin-top: 20px;">A long steel scythe coated in runes </p>
+                    <p style="color: rgb(255, 255, 255); margin-top: 20px;">1d20 + prof + dex mod</p>
+                    <p style="color: rgb(255, 255, 255); margin-top: 20px;">2d8 slashing dmg</p>
+                    <p style="color: rgb(255, 255, 255); margin-top: 20px;">The Sycthe can be used as a spell casting focus, furthermore when damaging an enemy, the target is inflicted with Soul Sickness.</p>
+                    <a href="../ArchiveEx/InfromationPages.html/soulSickness.html" style="color: rgb(188, 199, 231);"><p style="margin-top: 20px;">Soul Sickness</p></a>
+                    <p style=" text-align: right; color: rgb(255, 255, 255);">500 SC</p>
+                </div>
+            </div>
+
+            <div class="section" style="background-color: rgb(120, 73, 32);">
+                <div class="section-title" style="color: silver;">name</div>
+                <div class="content">
+                    <p style="color: rgb(255, 255, 255);">Desc</p>
+                    <p style=" text-align: right; color: rgb(255, 255, 255);">cost</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="large-box" style="background-color: rgb(100, 10, 10);">
+            <div class="large-box-title" style="text-align: center;"><H1 style="color: rgb(123, 118, 118);">Sin</H1></div>
+            <div class="large-box-title" style="margin-top: 10px;">
+                <p style="font-size: 25px; color: rgb(123, 118, 118);">Sin's Blessings:</p>
+            </div>
+
+            <div class="section" style="background-color: rgb(112, 38, 38);">
+                <div class="section-title" style="color: rgb(123, 118, 118);">Temporary Blessing</div>
+                <div class="content">
+                    <p style="padding-bottom: 10px; color: #a39c9c;">Gain the combined effects of concentrated sin for 24 hours, reference link below for full list of concentrates.</p>
+                    <a href="../ArchiveEx/InfromationPages.html/sinConcentrate.html" style="color: rgb(84, 129, 137);">Concentrate</a>
+                    <p style=" text-align: right; color: #a39c9c;">500 SC</p>
+                </div>
+            </div>
+            
+            <div class="section" style="background-color: rgb(112, 38, 38);">
+                <div class="section-title" style="color: rgb(123, 118, 118);">Extended Blessing</div>
+                <div class="content">
+                    <p style="padding-bottom: 10px; color: #a39c9c;">Gain the combined effects of concentrated sin for one week, reference link below for full list of concentrates.</p>
+                    <a href="../ArchiveEx/InfromationPages.html/sinConcentrate.html" style="color: rgb(84, 129, 137);">Concentrate</a>
+                    <p style=" text-align: right; color: #a39c9c;">1000 SC</p>
+                </div>
+            </div>
+
+            <div class="section" style="background-color: rgb(112, 38, 38);">
+                <div class="section-title" style="color: rgb(123, 118, 118);">Perminant Blessing</div>
+                <div class="content">
+                    <p style="padding-bottom: 10px; color: #a39c9c;">Gain the combined effects of concentrated sin for 24 hours, may only have one perminant blessing at a time, reference link below for full list of concentrates.</p>
+                    <a href="../ArchiveEx/InfromationPages.html/sinConcentrate.html" style="color: rgb(84, 129, 137);">Concentrate</a>
+                    <p style=" text-align: right; color: #a39c9c;">2000 SC</p>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+            <div class="large-box-title" style="margin-top: 10px;">
+                <p style="font-size: 25px; color: rgb(123, 118, 118);">Concentrates:</p>
+                <p style="color: rgb(142, 135, 135);">Small glass viles that when consumed give you unique buffs based on the sin until the next dawn. As an action you may consume a vile. After the vile is consumed, the user may transition in and out of a radiant form (action) giving them new abilities that do not interfere with their normal abilities unless specified. See below for specific abilities.</p>
+            </div>
+
+            <div class="container"> 
+                <div class="section-wide" style="background-color: rgb(112, 38, 38);">
+                    <div class="section-title" style="color: rgb(123, 118, 118);">Concentrated Pride</div>
+                    <div class="content">
+                        <p style="padding-bottom: 10px; color: #a39c9c;">While in pride's radiant form, you gain a radiant aura, all creatures within 30 ft radius of you must succeed on a WIS 20 saving throw or be charmed by you. While charmed, the entity will complete small tasks for you at your request and will remain on good terms with you until you transform out of the radiant form. The tasks given cannot be too complex or inflict suffering on any party, moreover if the target leaves your radius the effects dissipate.</p>
+                        <p style="padding-bottom: 10px; color: #a39c9c;">Gift of song -</p>
+                        <p style="padding-bottom: 10px; color: #a39c9c;">As an action, you may grace an entity of your choice with a blessing. The entity will automatically succeed any persuasion roll that has a check of 19 or lower. This effect lasts until you determine otherwise or until you shift out of your radiant form.</p>
+                        <p style=" text-align: right; color: #a39c9c;">50 SC</p>
+                    </div>
+                </div>
+        
+                <div class="section-wide" style="background-color: rgb(112, 38, 38);">
+                    <div class="section-title" style="color: rgb(123, 118, 118);">Concentrated Greed</div>
+                    <div class="content">
+                        <p style="padding-bottom: 10px; color: #a39c9c;">While in greed's radiant form, entities around you become infatuated with the trinkets and treasures you create. You will constantly be generating illusory treasure while in this form to do with what you please.</p>
+                        <p style="padding-bottom: 10px; color: #a39c9c;">Greed's Fortune -</p>
+                        <p style="padding-bottom: 10px; color: #a39c9c;">With this illusory treasure, you may offer as a trade to any entity you wish as an action. If the entity is not already willing to trade, they must succeed on a INT 20 saving throw or be forced to take the deal you offer. Only one deal may take place at once, however once a deal has been formed, you may offer more treasure in exchange for more service from the creature at a reduced or null INT saving throw.</p>
+                        <p style=" text-align: right; color: #a39c9c;">50 SC</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container"> 
+                <div class="section-wide" style="background-color: rgb(112, 38, 38);">
+                    <div class="section-title" style="color: rgb(123, 118, 118);">Concentrated Wrath</div>
+                    <div class="content">
+                        <p style="padding-bottom: 10px; color: #a39c9c;">While in wrath’s radiant form, your animalistic rage pushes to the forefront of your mind, empowering your attacks. When attacking with melee attacks you may,</p>
+                        <p style="padding-bottom: 10px; color: #a39c9c;">Drive -</p>
+                        <p style="padding-bottom: 10px; color: #a39c9c;">Push the creature back 10 ft provoking opportunity attacks from allies in the process, if the target is stopped by a wall or obstacle, target takes 2d10 force damage. When pushing the target, you may travel with them to the new location, however this does not provoke opportunity attacks.</p>
+                        <p style="padding-bottom: 10px; color: #a39c9c;">Flay -</p>
+                        <p style="padding-bottom: 10px; color: #a39c9c;">Attacks have a chance to tear weak points in the target’s defenses, combo attacks with successful consecutive flat attacks will have increasing power. Roll a d20 on attack, if the roll is above a 10, flay is applied. The first flay does nothing, the second consecutive flay will give the next attack advantage, the third consecutive flay will make the target vulnerable to the next attack.</p>
+                        <p style="padding-bottom: 10px; color: #a39c9c;">Eviscerate -</p>
+                        <p style="padding-bottom: 10px; color: #a39c9c;">If the target is below 10% hp, instantly eliminate the target.</p>
+                        <p style=" text-align: right; color: #a39c9c;">50 SC</p>
+                    </div>
+                </div>
+        
+                <div class="section-wide" style="background-color: rgb(112, 38, 38);">
+                    <div class="section-title" style="color: rgb(123, 118, 118);">Concentrated Envy</div>
+                    <div class="content">
+                        <p style="padding-bottom: 10px; color: #a39c9c;">While in envy's radiant form, all enemies will become enraged by your presence, dropping whatever predetermined task they may have had and charge you head on. Furthermore, while in this form you gain a plus 3 to AC.</p>
+                        <p style="padding-bottom: 10px; color: #a39c9c;">Radiant Beauty -</p>
+                        <p style="padding-bottom: 10px; color: #a39c9c;">As a reaction you may dawn a protective shell, offering +10 to AC until the start of your next turn, however you forfeit your next action</p>
+                        <p style=" text-align: right; color: #a39c9c;">50 SC</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container"> 
+                <div class="section-wide" style="background-color: rgb(112, 38, 38);">
+                    <div class="section-title" style="color: rgb(123, 118, 118);">Concentrated Gluttony</div>
+                    <div class="content">
+                        <p style="padding-bottom: 10px; color: #a39c9c;">While in the gluttony's radiant form, you become stationary unable to move until switching out of this form. However your HP is quadrupled, and any health that doesn’t go over this amount into your own will be healed when switching out of this form.</p>
+                        <p style="padding-bottom: 10px; color: #a39c9c;">Produce -</p>
+                        <p style="padding-bottom: 10px; color: #a39c9c;">As an action you may choose to produce food, tech, or impulse. An ally may pick up one of these items, healing 20+1d20 on picking up food, add 1 temp Ac on picking up tech, or grain a random buff on picking up impulse. These effects last until switching out of the form.</p>
+                        <p style=" text-align: right; color: #a39c9c;">50 SC</p>
+                    </div>
+                </div>
+        
+                <div class="section-wide" style="background-color: rgb(112, 38, 38);">
+                    <div class="section-title" style="color: rgb(123, 118, 118);">Concentrated Conquest</div>
+                    <div class="content">
+                        <p style="padding-bottom: 10px; color: #a39c9c;">While In the form of conquest, your radiant aura offers companions within a radius of 30 ft advantage on attacks. Furthermore while in this radius they gain +5 to both hit and damage rolls.</p>
+                        <p style="padding-bottom: 10px; color: #a39c9c;">Radiant Steed -</p>
+                        <p style="padding-bottom: 10px; color: #a39c9c;">As an action you may summon a fiery battle steed, riding it in a straight line up to 60 feet and summoning a path of fire under itself. This fire deals 10d4 along with 3d4 each turn a target remains in the fire afterwards. A target who is in the fire at any point takes 4d6 fire damage each turn until extinguished with sn action.</p>
+                        <p style=" text-align: right; color: #a39c9c;">50 SC</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container"> 
+                <div class="section-wide" style="background-color: rgb(112, 38, 38);">
+                    <div class="section-title" style="color: rgb(123, 118, 118);">Concentrated Desire</div>
+                    <div class="content">
+                        <p style="padding-bottom: 10px; color: #a39c9c;">While in desire’s radiant form, you have influence over the desires of an intended target. As an action you may roll a d6 and declare a target, the number on the die coinciding with another sin.</p>
+                        <p style="padding-bottom: 10px; color: #a39c9c;">1 = Pride</p>
+                        <p style="padding-bottom: 10px; color: #a39c9c;">2 = Greed</p>
+                        <p style="padding-bottom: 10px; color: #a39c9c;">3 = Wrath</p>
+                        <p style="padding-bottom: 10px; color: #a39c9c;">4 = Envy</p>
+                        <p style="padding-bottom: 10px; color: #a39c9c;">5 = Gluttony</p>
+                        <p style="padding-bottom: 10px; color: #a39c9c;">6 = Conquest</p>
+                        <p style="padding-bottom: 10px; color: #a39c9c;">When the intended target is affected by this roll, their new goal in life will become to devote themselves to the activity of this sin, however to what extent is determined by their previous level of inhibitions towards their previous goals. This effect remains until you switch out of the radiant form, however is permanent for any level of Sins Blessing.</p>
+                        <p style="padding-bottom: 10px; color: #a39c9c;">Obsession -</p>
+                        <p style="padding-bottom: 10px; color: #a39c9c;">As an action, you may inflict obsession onto an intended target. The target will leave behind any pretense of completing whatever it was they were doing, and relentlessly consume themselves in whatever sin they exhibit. This effect is wildly unpredictable and will last until switched out of the radiant form, however if Sins Blessing is utilized the effect is permanent.</p>
+                        <p style=" text-align: right; color: #a39c9c;">50 SC</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="large-box-title" style="margin-top: 10px;">
+                <h1></h1>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
