@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TMM Archive</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        
+        #navbar {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        #navbar h1 {
+            margin: 0;
+            display: inline;
+        }
+        
+        #navbar .nav-buttons {
+            display: flex;
+            align-items: center;
+        }
+        
+        #navbar .nav-buttons button {
+            margin-left: 10px;
+            background-color: transparent;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 5px 10px;
+            border-radius: 3px;
+            transition: background-color 0.3s;
+        }
+        
+        #navbar .nav-buttons button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        #searchBar {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            padding: 5px;
+            width: 300px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .large-box {
+            background-color: #fff;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: block; /* Stacked vertically */
+        }
+        
+        .large-box-title {
+            font-size: 20px;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        
+        .sections-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section {
+            width: 200px;
+            background-color: #fff;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: inline-block; /* Stacked horizontally */
+            vertical-align: top; /* Align boxes at the top */
+            transition: box-shadow 0.3s;
+        }
+        
+        .section:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .section-title {
+            font-size: 18px;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        
+        .content {
+            display: none;
+        }
+        
+        .section:hover .content {
+            display: block;
+            margin-top: 10px;
+        }
+        
+        .section .content p {
+            margin: 0;
+        }
+
+        .container {
+            display: flex; /* Use flexbox to stack the boxes horizontally */
+        }
+
+        .container {
+            display: flex; /* Use flexbox to stack the boxes horizontally */
+        }
+
+        .section-wide {
+            flex: 1; /* Make the boxes take up equal space */
+            max-width: 800px; /* Set the maximum width for each box */
+            background-color: #fff;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s;
+        }
+
+        .section-wide:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .section-wide:hover .content {
+            display: block;
+            margin-top: 10px;
+        }
+
+        .section-wide .content p {
+            margin: 0;
+        }
+    </style>
+    <script>
+        // Function to calculate Levenshtein distance between two strings
+        function levenshteinDistance(a, b) {
+            if (a.length === 0) return b.length;
+            if (b.length === 0) return a.length;
+        
+            var matrix = [];
+        
+            // Initialize matrix
+            for (var i = 0; i <= b.length; i++) {
+                matrix[i] = [i];
+            }
+        
+            for (var j = 0; j <= a.length; j++) {
+                matrix[0][j] = j;
+            }
+        
+            // Calculate Levenshtein distance
+            for (var i = 1; i <= b.length; i++) {
+                for (var j = 1; j <= a.length; j++) {
+                    if (b.charAt(i - 1) === a.charAt(j - 1)) {
+                        matrix[i][j] = matrix[i - 1][j - 1];
+                    } else {
+                        matrix[i][j] = Math.min(
+                            matrix[i - 1][j - 1] + 1, // substitution
+                            matrix[i][j - 1] + 1,     // insertion
+                            matrix[i - 1][j] + 1      // deletion
+                        );
+                    }
+                }
+            }
+        
+            return matrix[b.length][a.length];
+        }
+        
+        // Function to perform fuzzy search
+        function fuzzyMatch(str, searchTerm) {
+            var words = str.split(' ');
+            for (var i = 0; i < words.length; i++) {
+                if (levenshteinDistance(words[i], searchTerm) <= 2) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    </script>
+</head>
+<body>
+    <div id="navbar">
+        <h1>Welcome to the TMM Markets</h1>
+        <div class="nav-buttons">
+            <button onclick="window.location.href='../index.html'">Home</button>
+        </div>
+        <input type="text" id="searchBar" placeholder="Search..." onkeyup="search()">
+    </div>
+    
+    <div class="sections-container">
+        <div class="large-box">
+            <div class="large-box-title" style="text-align: center;"><h1>TMM CO. Augments</h1></div>
+            <div class="large-box-title">Genetic Augments <a href="TmmMarketP/Gen/AllGen.html" style="padding-left: 30px;">Full List</a></div>
+
+            <div class="section">
+                <div class="section-title"><a href="TmmMarketP/Gen/VisorGen.html">Visor</a></div>
+                <div class="content">
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title"><a href="TmmMarketP/Gen/TorsoGen.html">Torso</a></div>
+                <div class="content">
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title"><a href="TmmMarketP/Gen/ArmGen.html">Arm</a></div>
+                <div class="content">
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title"><a href="TmmMarketP/Gen/LegGen.html">Leg</a></div>
+                <div class="content">
+                </div>
+            </div>
+
+            <div class="large-box-title" style="padding-top: 50px;">Physical Augments <a href="TmmMarketP/Phy/AllPhy.html" style="padding-left: 30px;">Full List</a></div>
+
+            <div class="section">
+                <div class="section-title"><a href="TmmMarketP/Phy/VisorPhy.html">Visor</a></div>
+                <div class="content">
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title"><a href="TmmMarketP/Phy/TorsoPhy.html">Torso</a></div>
+                <div class="content">
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title"><a href="TmmMarketP/Phy/ArmPhy.html">Arm</a></div>
+                <div class="content">
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title"><a href="TmmMarketP/Phy/LegPhy.html">Leg</a></div>
+                <div class="content">
+                </div>
+            </div>
+        </div>
+
+        
+    </div>
+
+    
+</body>
+</html>
+
+
+
+
+
+
+

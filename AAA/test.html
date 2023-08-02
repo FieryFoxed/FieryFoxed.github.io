@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hombrewed</title>
+
+    <style>
+        body {
+            background-image: url(images/blueVoid.jpg);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        #navbar {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        #navbar h1 {
+            margin: 0;
+            display: inline;
+        }
+        
+        #navbar .nav-buttons {
+            display: flex;
+            align-items: center;
+        }
+        
+        #navbar .nav-buttons button {
+            margin-left: 10px;
+            background-color: transparent;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 5px 10px;
+            border-radius: 3px;
+            transition: background-color 0.3s;
+        }
+        
+        #navbar .nav-buttons button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .section {
+            min-width: 100px;
+            min-height: 100px;
+            width: max-content;
+            height: min-content;
+            padding: 10px;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
+
+        .held {
+            display: flex;
+            justify-content: space-evenly;
+            margin: 10px;
+            align-items: center; /* Center content vertically within .held */
+        }
+
+        .sectionPC {
+    /* ... (previous CSS code) ... */
+            position: relative; /* Add relative positioning for .sectionPC */
+        }
+
+        .info-container {
+            position: absolute;
+            top: 50%; /* Position the info boxes 50% from the top of .sectionPC */
+            left: 50%; /* Position the info boxes 50% from the left of .sectionPC */
+            transform: translate(-50%, -50%); /* Center the info boxes using transform */
+        }
+
+
+        .button-container {
+            
+            align-content: center;
+            margin: 10px;
+
+        }
+
+
+        .button {
+            padding: 8px 12px;
+            background-color: #0e0e1b;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #6cdbec;
+        }
+        .info-box {
+            width: 100px; 
+            background-color: rgb(0, 0, 0);
+            display: none;
+            justify-content: center; /* Center content vertically */
+            align-items: center; /* Center content horizontally */
+        }
+        .info-box.visible {
+            display: flex; /* Use flexbox to center the content */
+            flex-direction: column; /* Align the items vertically */
+            gap: 5px; /* Add some spacing between info-items */
+        }
+        .info-item {
+            margin: 5px 0;
+            background-color: black;
+            padding: 5px;
+            text-align: center; /* Center text horizontally */
+            display: flex;
+            justify-content: center;
+        }
+        
+    </style>
+    <script>
+        function search() {
+            var input, sections, section, i, content, txtValue, searchTerm;
+            input = document.getElementById('searchBar');
+            searchTerm = input.value.toLowerCase();
+            sections = document.getElementsByClassName('section');
+            
+            for (i = 0; i < sections.length; i++) {
+                section = sections[i];
+                content = section.getElementsByClassName('content')[0];
+                txtValue = content.textContent || content.innerText;
+                
+                // Perform fuzzy search using Levenshtein distance algorithm
+                if (fuzzyMatch(txtValue.toLowerCase(), searchTerm)) {
+                    section.style.display = '';
+                } else {
+                    section.style.display = 'none';
+                }
+            }
+        }
+        
+        // Function to calculate Levenshtein distance between two strings
+        function levenshteinDistance(a, b) {
+            if (a.length === 0) return b.length;
+            if (b.length === 0) return a.length;
+        
+            var matrix = [];
+        
+            // Initialize matrix
+            for (var i = 0; i <= b.length; i++) {
+                matrix[i] = [i];
+            }
+        
+            for (var j = 0; j <= a.length; j++) {
+                matrix[0][j] = j;
+            }
+        
+            // Calculate Levenshtein distance
+            for (var i = 1; i <= b.length; i++) {
+                for (var j = 1; j <= a.length; j++) {
+                    if (b.charAt(i - 1) === a.charAt(j - 1)) {
+                        matrix[i][j] = matrix[i - 1][j - 1];
+                    } else {
+                        matrix[i][j] = Math.min(
+                            matrix[i - 1][j - 1] + 1, // substitution
+                            matrix[i][j - 1] + 1,     // insertion
+                            matrix[i - 1][j] + 1      // deletion
+                        );
+                    }
+                }
+            }
+        
+            return matrix[b.length][a.length];
+        }
+        
+        // Function to perform fuzzy search
+        function fuzzyMatch(str, searchTerm) {
+            var words = str.split(' ');
+            for (var i = 0; i < words.length; i++) {
+                if (levenshteinDistance(words[i], searchTerm) <= 2) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function showInfoSet(setNumber) {
+            // Hide all info boxes
+            const infoBoxes = document.querySelectorAll('.info-box');
+            infoBoxes.forEach(infoBox => infoBox.classList.remove('visible'));
+
+            // Show the selected info box
+            const selectedInfoBox = document.getElementById(`infoSet${setNumber}`);
+            selectedInfoBox.classList.add('visible');
+        }
+    </script>
+</head>
+<body>
+    <div id="navbar">
+        <h1>Homebrewed Segments</h1>
+        <div class="nav-buttons">
+            <button onclick="window.location.href='index.html'">Home</button>
+        </div>
+        <input type="text" id="searchBar" placeholder="Search..." onkeyup="search()">
+    </div>
+
+    <div class="held">
+        <div class="sectionPC" style="background-image: url(images/Pc.jpg);">
+            <h1 style="color: #fff; text-align: center;">Physical Cybernetic</h1>
+            <div class="button-container" style="margin-left: 32%;">
+                <button class="button" onclick="showInfoSet(1)">Genetic</button>
+                <button class="button" onclick="showInfoSet(2)">Physical</button>
+                <button class="button" onclick="showInfoSet(3)">Both</button>
+            </div>
+            <div class="info-box" id="infoSet1">
+                <div class="info-item"><a href="markets/TmmMarketP/Gen/VisorGen.html">Visor</a></div>
+                <div class="info-item"><a href="markets/TmmMarketP/Gen/ArmGen.html">Left Arm</a></div>
+                <div class="info-item"><a href="markets/TmmMarketP/Gen/ArmGen.html">Right arm</a></div>
+                <div class="info-item"><a href="markets/TmmMarketP/Gen/TorsoGen.html">Torse</a></div>
+                <div class="info-item"><a href="markets/TmmMarketP/Gen/LegGen.html">Left Leg</a></div>
+                <div class="info-item"><a href="markets/TmmMarketP/Gen/LegGen.html">Right Leg</a></div>
+            </div>
+            <div class="info-box" id="infoSet2">
+                <div class="info-item"><a href="markets/TmmMarketP/Phy/VisorPhy.html">Visor</a></div>
+                <div class="info-item"><a href="markets/TmmMarketP/Phy/ArmPhy.html">Left Arm</a></div>
+                <div class="info-item"><a href="markets/TmmMarketP/Phy/ArmPhy.html">Right arm</a></div>
+                <div class="info-item"><a href="markets/TmmMarketP/Phy/TorsoPhy.html">Torso</a></div>
+                <div class="info-item"><a href="markets/TmmMarketP/Phy/LegPhy.html">Left Leg</a></div>
+                <div class="info-item"><a href="markets/TmmMarketP/Phy/LegPhy.html">Right Leg</a></div>
+            </div>
+            <div class="info-box" id="infoSet3">
+                <div class="info-item"><a href="markets/TmmMarketP/comb/">Visor</a></div>
+                <div class="info-item"><a href="markets/TmmMarketP/comb/">Left Arm</a></div>
+                <div class="info-item"><a href="markets/TmmMarketP/comb/">Right arm</a></div>
+                <div class="info-item"><a href="markets/TmmMarketP/comb/">Torse</a></div>
+                <div class="info-item"><a href="markets/TmmMarketP/comb/">Left Leg</a></div>
+                <div class="info-item"><a href="markets/TmmMarketP/comb/">Right Leg</a></div>
+            </div>
+        </div>
+
+        <div class="sectionPC" style="background-image: url(images/bbb.PNG);">
+       
+        </div>
+    </div>
+
+    
+</body>
+</html>
