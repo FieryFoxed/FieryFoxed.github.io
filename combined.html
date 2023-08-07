@@ -12,6 +12,43 @@
             margin: 0;
             padding: 0;
         }
+
+        .box {
+            display: block;
+            background-color: black;
+            width: auto;
+            height: 500px;
+            margin: 10px;
+            border: 15px rgb(126, 0, 108);
+            border-style: double;
+        }
+
+        .boxU {
+            display: block;
+            background-color: black;
+            width: auto;
+            height: 500px;
+            margin: 10px;
+        }
+
+        .IboxU {
+            display: block;
+            background-color: black;
+            width: 50%;
+            height: 80%;
+            margin: 10px;
+        }
+
+        .Ibox {
+            display: block;
+            background-color: black;
+            width: 50%;
+            height: 80%;
+            margin: 10px;
+            border: 5px rgb(126, 0, 108);
+            border-style:groove
+            
+        }
         
         #navbar {
             background-color: #333;
@@ -228,7 +265,30 @@
         <input type="text" id="searchBar" placeholder="Search..." onkeyup="search()">
     </div>
 
-    <div class="held">
+    <div class="box">
+        <h1 style="color: #fff; text-align: center;">Homebrewed Resources</h1>
+        <div style="display: flex; height: 98%;">
+            <div class="Ibox">
+                <h2 style="color: #fff; text-align: center;">Resource Links</h2>
+                <a href="#NA" style="color: white;"><p style="padding-left: 10px;">Nuerological Augments</p></a>
+                <a href="#PC" style="color: white;"><p style="padding-left: 10px;">Physical Augments</p></a>
+                <a href="#hbi" style="color: white;"><p style="padding-left: 10px;">Homebrewed AS and Character</p></a>
+                
+            </div>
+
+            <div class="Ibox">
+                <h2 style="color: #fff; text-align: center;">Homebrewed Sheet</h2>
+                <div style="border: 15px rgb(126, 0, 108);">
+                    <img src="images/homebrewed.jpg.JPG" alt="why did the file name do that" style="width: 38%; height: 70%;  padding-left: 32%;">
+                </div>
+                <a href="Files/Homebrewed.pdf" download="Homebrewed Sheet.pdf" style="color: #fff;"><p style="text-align: center;">DOWNLOAD</p></a>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="held" id="PC">
         <div class="sectionPC" style="background-image: url(images/Pc.jpg);">
             <h1 style="color: #fff; text-align: center;">Physical Augments</h1>
             <div class="button-container" style="margin-left: 32%;">
@@ -273,7 +333,7 @@
         </div>
     </div>
 
-    <div class="held">
+    <div class="held" id="NA">
         <div class="sectionN" style="background-image: url(images/neroM.PNG);">
             <h1 style="color: #fff; text-align: center;">Nuerological Augments</h1>
             <div class="button-container" style="margin-left: 44%;">
@@ -290,5 +350,23 @@
         <div class="sectionN" style="background-image: url(images/rbb.PNG);">
         </div>
     </div>
+
+    <div class="boxU" style="border: 15px green; border-style: groove; height: 700px;" id="hbi">
+        <h1 style="text-align: center; color: #fff;">Homebrewed Information</h1>
+
+
+        <div style="display: flex; height: 98%;">
+            <div class="IboxU" style="border: 7px green; border-style: groove;">
+                <h2 style="text-align: center; color: #ffffff;">Fundamental Information</h2>
+                <a href="hbci.html/sheetexpli.html" style="color: #fff; padding-left: 10px;">Understanding The Homebrewed Sheet</a>
+            </div>
+
+            <div class="IboxU" style="border: 7px green; border-style: groove;">
+
+            </div>
+        </div>
+
+    </div>
+
 </body>
 </html>

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hombrewed</title>
+
+    <style>
+        body {
+            background-image: url(../images/blueVoid.jpg);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .boxU {
+            display: block;
+            background-color: black;
+            width: auto;
+            height: auto;
+            margin: 10px;
+        }
+
+        .IboxU {
+            display: block;
+            background-color: black;
+            width: 50%;
+            height: 80%;
+            margin: 10px;
+        }
+        
+        #navbar {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        #navbar h1 {
+            margin: 0;
+            display: inline;
+        }
+        
+        #navbar .nav-buttons {
+            display: flex;
+            align-items: center;
+        }
+        
+        #navbar .nav-buttons button {
+            margin-left: 10px;
+            background-color: transparent;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 5px 10px;
+            border-radius: 3px;
+            transition: background-color 0.3s;
+        }
+        
+        #navbar .nav-buttons button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .section {
+            min-width: 100px;
+            min-height: 100px;
+            width: max-content;
+            height: min-content;
+            padding: 10px;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
+
+        .held {
+            display: flex;
+            justify-content: space-evenly;
+            margin: 10px;
+            align-items: center; /* Center content vertically within .held */
+        }
+    </style>
+    <script>
+        function search() {
+            var input, sections, section, i, content, txtValue, searchTerm;
+            input = document.getElementById('searchBar');
+            searchTerm = input.value.toLowerCase();
+            sections = document.getElementsByClassName('section');
+            
+            for (i = 0; i < sections.length; i++) {
+                section = sections[i];
+                content = section.getElementsByClassName('content')[0];
+                txtValue = content.textContent || content.innerText;
+                
+                // Perform fuzzy search using Levenshtein distance algorithm
+                if (fuzzyMatch(txtValue.toLowerCase(), searchTerm)) {
+                    section.style.display = '';
+                } else {
+                    section.style.display = 'none';
+                }
+            }
+        }
+        
+        // Function to calculate Levenshtein distance between two strings
+        function levenshteinDistance(a, b) {
+            if (a.length === 0) return b.length;
+            if (b.length === 0) return a.length;
+        
+            var matrix = [];
+        
+            // Initialize matrix
+            for (var i = 0; i <= b.length; i++) {
+                matrix[i] = [i];
+            }
+        
+            for (var j = 0; j <= a.length; j++) {
+                matrix[0][j] = j;
+            }
+        
+            // Calculate Levenshtein distance
+            for (var i = 1; i <= b.length; i++) {
+                for (var j = 1; j <= a.length; j++) {
+                    if (b.charAt(i - 1) === a.charAt(j - 1)) {
+                        matrix[i][j] = matrix[i - 1][j - 1];
+                    } else {
+                        matrix[i][j] = Math.min(
+                            matrix[i - 1][j - 1] + 1, // substitution
+                            matrix[i][j - 1] + 1,     // insertion
+                            matrix[i - 1][j] + 1      // deletion
+                        );
+                    }
+                }
+            }
+        
+            return matrix[b.length][a.length];
+        }
+        
+        // Function to perform fuzzy search
+        function fuzzyMatch(str, searchTerm) {
+            var words = str.split(' ');
+            for (var i = 0; i < words.length; i++) {
+                if (levenshteinDistance(words[i], searchTerm) <= 2) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function showInfoSet(setNumber) {
+            // Hide all info boxes
+            const infoBoxes = document.querySelectorAll('.info-box');
+            infoBoxes.forEach(infoBox => infoBox.classList.remove('visible'));
+
+            // Show the selected info box
+            const selectedInfoBox = document.getElementById(`infoSet${setNumber}`);
+            selectedInfoBox.classList.add('visible');
+        }
+    </script>
+</head>
+<body>
+    <div id="navbar">
+        <h1>Homebrewed Segments</h1>
+        <div class="nav-buttons">
+            <button onclick="window.location.href='../index.html'">Home</button>
+        </div>
+        <input type="text" id="searchBar" placeholder="Search..." onkeyup="search()">
+    </div>
+
+    <div class="boxU" style="border: 15px blue; border-style: groove;">
+        <div class="boxU" style="padding-top: 10px; border: 5px blueviolet; border-style: groove;">
+            <h1 style="color: #fff; text-align: center;">Homebrewed ASI</h1>
+        </div>
+        <div style="margin-right: 10px; margin-left: 10px; margin-bottom: 10px; border: 5px blueviolet; border-style: groove; display: inline-flex;">
+            <div>
+                <p style="color: #fff; max-width: 80%; padding-left: 5px;">
+                    To the right is the list of homebrewed Ability Scores. Each AS relies directly on base dnd stats and works as an extension to the base D&D Ability Scores. The Ability Scores are as followed : <br><br>
+                    MTA (Metaphysics) = Wisdom<br><br>
+                    KNO (Knowledge) = Intelligence<br><br>
+                    INS (Inspiration) = Charisma<br><br>
+                    ADA (Adaptability) = Constitution <br><br>
+                    FLU (Fluidity) = Dexterity <br><br>
+                    EXP (Exponentialism) = Strength<br><br>
+                    Calculating the homebrewed Ability Scores is slightly different then base D&D. There is no rolling for stats involved, Instead, the base number for each AS is based on the modifier of the related D&D AS’s (Cannot exceed +5 from D&D mods) modifier plus any Additions, Items, and Class features. (Reference Additions and Class info for further explanations.) <br><br>
+                    For example if you have a 20 in WIS you would have a +5 WIS modifier. Transitively, you would have a 5 as your MTA AS. However, the homebrewed modifier calculations are slightly different. They are as follows:<br><br>
+                    5 = +1<br><br>
+                    10 = +2<br><br>
+                    14 = +3<br><br>
+                    17 = +4<br><br>
+                    20 = +5<br><br>
+                    The segments below the AS are your death saving throws. These are calculated the same way, the AS modifier is added to a d20 roll plus proficiency modifier if applicable.<br><br>
+                </p>
+            </div>
+            <div>
+                <img src="../images/asiexpli.PNG" alt="asi" style="padding: 30px;">
+            </div>
+        </div>
+
+        <div class="boxU" style="border: 5px coral; border-style: groove;">
+            <h1 style="text-align: center; color: #fff;">Homebrewed Skills</h1>
+        </div>
+
+        <div class="boxU" style="border: 5px coral; border-style: groove; display: flex;">
+            <div>
+                <img src="../images/skillsexpli.PNG" alt="asi" style="margin-top: 50%; padding-left: 30px; padding-right: 30px;">
+            </div>
+
+            <div style="color: #fff;">
+                <p>
+                    To the left is a list of Homebrewed Skills. Calculating them is the same as base D&D, add the modifier of the related AS plus proficiency if applicable. The skills relating to their use and related AS are as follows:
+                </p>
+                <h3>MTA Skills:</h3>
+                <p>
+                    Influence - The user's ability to interact with souls and Metaphysical systems. Mainly useful when crafting, collecting, manipulating souls in any fashion, or attempting to understand Meta Subfabrical Physics. <br><br>
+
+                    Ideology - The user's understanding of multiversal sects of thought and complex religion. While a normal religion check will offer understanding into who the god is and what they stand for, Ideology checks may offer insight into what entities goals and desires are.<br><br>
+
+                    Projection - The user’s influence on their own soul in relation to existing outside of the body. This is most prevalent when trying to exist in multiple places, exist outside of the body, or comprehend external concepts.<br><br>
+                </p>
+                <h3>KNO Skills:</h3>
+                <p>
+                    Tinkering - The user’s understanding of machinery and mechanical components, often determines the user's success when crafting with technological or exotic components.<br><br>
+
+                    Tech Tree - The user’s understanding of technological advancements throughout all facets of history. Most useful when attempting to determine the functionality, damage, or potential of a mechanism.<br><br>
+
+                    Physics - The user’s understanding of physics encompassing everything from Standard Physics to Structural Subfabrical Physics. Excludes Meta Subfabrical Physics.<br><br>
+
+                </p>
+                <h3>INS Skills:</h3>
+                <p>
+                    Resolve - The user’s understanding of their own goals and beliefs, most useful when attempting to push through mentally to complete a task or to defend your own beliefs.<br><br>
+
+                    Indoctrinate - The user’s ability to alter a belief system, where persuasion exists to convince an individual to understand or complete a task, Indoctrinate focuses on fundamentally changing an individual's thoughts, imprinting your words or actions into the psyche of an entity.<br><br>
+
+                    Galvanize - The user’s ability to encite, where persuasion exists to convince an individual to understand or complete a task, Galvanize focuses on fervor and a call to action. This is most useful when convincing entities to complete a goal at any cost possible, often if not up to sacrificing their own life.<br><br>
+                </p>
+                <h3>ADA Skills:</h3>
+                <p>
+                    Resistance - The user’s ability withstand suffering both mentally and physically, allowing the user to recover quickly from ingesting poisons, withstand poisonous effects completely, and withstand immense physical pain.<br><br>
+
+                    Extension - The user’s ability to exceed their biological limit, this is most useful when running out of oxygen, dropping to 0 hp, or failing certain checks.<br><br>
+
+                    Versatility - The user’s ability to adapt their own body in the field, most useful when attempting to combine with simbiots, replace limbs, or repair biological/mechanical limbs or body parts.<br><br>
+                </p>
+                <h3>FLU Skills:</h3>
+                <p>
+                    Capacity - The user’s ability to complete multiple actions at the exact same time, also useful when initially attempting to add another consciousness into your own if applicable.<br><br>
+
+                    Contortion - The user’s ability to contort their own body into smaller spaces, most useful in combination with a stealth roll or crawl through spaces significantly smaller than their overall body.<br><br>
+
+                    Distinguish - The user’s ability to convince entities they do or don't belong in an area, where disguise is used to impersonate a person or roll, Distinguish is utilized to integrate yourself into a system or stand out significantly.<br><br>
+
+                </p>
+                <h3>EXP Skills:</h3>
+                <p>
+                    Exertion - The user’s ability to push past their strength abilities, allowing the user to run faster, lift impossibly heavy things, or complete incomprehensible tasks.<br><br>
+
+                    Fracture - The user’s ability to crush, sever, or cripple an entity or mechanism both in and out of combat.<br><br>
+
+                    Detach - The users ability to exceed their own physical strength entirely, most useful when completing actions or using systems that would destroy the physical vessel of the user. Resulting in less or no structural damage.<br><br>
+                </p>
+            </div>
+
+        </div>
+
+        <div class="boxU" style="border: 5px rgb(0, 208, 255); border-style: groove;">
+            <h1 style="text-align: center; color: #fff;">Augments</h1>
+        </div>
+
+        <div class="boxU" style="border: 5px rgb(0, 208, 255); border-style: groove;">
+            <div style="display: inline-flex;">
+                <p style="color: #fff; padding-left: 15px;">
+                    To the right is the segment of the sheet for documenting augments. <br><br>
+                    (Refer to the <a href="../combined.html" style="color: aqua;">Homebrewed Segment</a> for more resources related to choosing available augments and special rulings related to quantity and type)<br><br>
+                    
+                    The Augment segment of the sheet is focused less on utility and more on documentation; to the left of the segment, half of the area is allocated for notes relating to augment abilities and interactions. To the top right is a list of physical augmentation, containing 5 boxes to document the selection of a visor, 2 arms, a torso, and two legs. Space is allocated for notes or alterations provided by specific circumstances if applicable. <br><br>
+
+                    Below the Physical Augments section is the Neurological Augments section, possessing a total of 7 slots. Once again refer to the link above for special rulings, however, it should be noted that generally only 4 neurological slots are available without special circumstances. Furthermore, two circles with an O and an A are present. These are for keeping track of your available augments slots. O for original, and A for altered. Fill in O if you only have access to the original 4 slots, and A for any other circumstances.<br><br>
+
+
+                </p>
+
+                <img src="../images/augmentexpli.PNG" alt="asi" style="margin-left: 10%; padding: 10px; height: 800px" >
+            </div>
+        </div>
+
+        
+        
+
+        <div class="boxU" style="border: 5px greenyellow; border-style: groove;">
+            <h1 style="text-align: center; color: #fff;">Soul Augments</h1>
+        </div>
+
+        <div class="boxU" style="border: 5px greenyellow; border-style: groove;">
+            <div style="display: inline-block;">
+                <p style="color: #fff; padding: 10px;">
+                    Below is the Soul Augment sheet and Additions category. To the top Left is a segment for both Soul Casings and Radiant Forms, both of which are obtained through different means within the universe. The segment to the right taking up half of the section is the Soul Augment notes section. This section is for further information or additional Radiant Forms, as most radiant information will need to be stored externally or printed out on another sheet. <br><br>
+
+                    As a general rule, characters may only have 1 Soul Case and 1 Radiant Form unless specified otherwise.<br><br>
+
+                    Within the Additions Segment, is where all Additions are kept track of. Only 7 slots are present, however there is no limit to the amount you may have. Additions are stackable, and the boxes next to the lines are for keeping track of how many of the same additions are present with a character.<br><br>
+
+                    Reference <a href="../combined.html" style="color: aqua;">Hombrewed Information</a> for more information on rulings and additions.
+
+                </p>
+
+                <img src="../images/soulexpli.PNG" alt="asi" style="width: 98%; padding: 10px;">
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
