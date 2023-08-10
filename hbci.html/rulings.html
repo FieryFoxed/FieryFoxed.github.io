@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TMM Archive</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        #navbar {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        #navbar h1 {
+            margin: 0;
+            display: inline;
+        }
+        
+        #navbar .nav-buttons {
+            display: flex;
+            align-items: center;
+        }
+        
+        #navbar .nav-buttons button {
+            margin-left: 10px;
+            background-color: transparent;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 5px 10px;
+            border-radius: 3px;
+            transition: background-color 0.3s;
+        }
+        
+        #navbar .nav-buttons button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        #searchBar {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            padding: 5px;
+            width: 300px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .section {
+            margin-bottom: 20px;
+        }
+        
+        .content {
+            margin-left: 20px;
+        }
+
+        .box {
+            width: auto;
+            height: auto;
+            display: block;
+        }
+    </style>
+    <script>
+        function search() {
+            var input, sections, section, i, content, txtValue, searchTerm;
+            input = document.getElementById('searchBar');
+            searchTerm = input.value.toLowerCase();
+            sections = document.getElementsByClassName('section');
+            
+            for (i = 0; i < sections.length; i++) {
+                section = sections[i];
+                content = section.getElementsByClassName('content')[0];
+                txtValue = content.textContent || content.innerText;
+                
+                // Perform fuzzy search using Levenshtein distance algorithm
+                if (fuzzyMatch(txtValue.toLowerCase(), searchTerm)) {
+                    section.style.display = '';
+                } else {
+                    section.style.display = 'none';
+                }
+            }
+        }
+        
+        // Function to calculate Levenshtein distance between two strings
+        function levenshteinDistance(a, b) {
+            if (a.length === 0) return b.length;
+            if (b.length === 0) return a.length;
+        
+            var matrix = [];
+        
+            // Initialize matrix
+            for (var i = 0; i <= b.length; i++) {
+                matrix[i] = [i];
+            }
+        
+            for (var j = 0; j <= a.length; j++) {
+                matrix[0][j] = j;
+            }
+        
+            // Calculate Levenshtein distance
+            for (var i = 1; i <= b.length; i++) {
+                for (var j = 1; j <= a.length; j++) {
+                    if (b.charAt(i - 1) === a.charAt(j - 1)) {
+                        matrix[i][j] = matrix[i - 1][j - 1];
+                    } else {
+                        matrix[i][j] = Math.min(
+                            matrix[i - 1][j - 1] + 1, // substitution
+                            matrix[i][j - 1] + 1,     // insertion
+                            matrix[i - 1][j] + 1      // deletion
+                        );
+                    }
+                }
+            }
+        
+            return matrix[b.length][a.length];
+        }
+        
+        // Function to perform fuzzy search
+        function fuzzyMatch(str, searchTerm) {
+            var words = str.split(' ');
+            for (var i = 0; i < words.length; i++) {
+                if (levenshteinDistance(words[i], searchTerm) <= 2) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    </script>
+</head>
+<body>
+    <div id="navbar">
+        <h1>Welcome to the TMM Archive</h1>
+        <div class="nav-buttons">
+            <button onclick="window.location.href='../index.html'">Home</button>
+        </div>
+        <input type="text" id="searchBar" placeholder="Search..." onkeyup="search()">
+    </div>
+
+    <h1 style="text-align: center;">Character Creation Rules</h1>
+
+    <div class="box" style="border: 10px red; border-style: groove;">
+        <h2 style="text-align: center;">Augment Rules</h2>
+    </div>
+
+    <div class="box" style="border: 10px red; border-style: groove;">
+
+    <div class="section">
+        <h2>Nuerological Augment Rules</h2>
+        <div class="content">
+            <p>
+                If the character is using Neurological Augments, 4 are initially available. There are a total of 8, however 4 are locked unless specified otherwise.  <br><br>
+
+                The 4 initially available have no prerequisites to using them, and can house chips, hive minds, and any other psychological additions that the character may obtain. <br><br>
+            </p>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Physical Augment Rules</h2>
+        <div class="content">
+            <p>
+                If the character is using physical augments there are a base of 5 available. These being the visor, 2 arms, torso, and 2 legs. <br><br>
+
+                For Physical Cybernetics, the character will need to have these slots converted into a format acceptable for the augments to be purchased. These can be obtained naturally through various means and classes, or they can be purchased from an organization with the proper technology. Genetic Augments can be obtained and utilized without any prerequisites. <br><br>
+                
+                As a base rule, a character cannot have Genetic and Cybernetic augments at the same time unless specified.<br><br>
+            </p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Soul Augments</h2>
+        <div class="content">
+            <p>
+                If the character is using a soul casing or radiant form, only one may be bound to the user unless specified otherwise.
+            </p>
+        </div>
+    </div>
+
+    </div>
+
+
+    <div class="box" style="border: 10px orange; border-style: groove;">
+        <h2 style="text-align: center;">General Rules</h2>
+    </div>
+
+    <div class="box" style="border: 10px orange; border-style: groove;">
+        <div class="section">
+            <h2>Skills</h2>
+            <div class="content">
+                <p>
+                    For all skills, proficiency may only be gained in a skill from a homebrewed class, addition, or special item. However, if a homebrewed class specifies you may take a skill, you may take one from either base D&D or the HB skills.
+                </p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Additions</h2>
+            <div class="content">
+                <p>
+                    Additions are gained each level of a homebrewed class. Characters may have as many of different or similar selections as they can obtain.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <div class="section">
+        <h2></h2>
+        <div class="content">
+            <p></p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2></h2>
+        <div class="content">
+            <p></p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2></h2>
+        <div class="content">
+            <p></p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2></h2>
+        <div class="content">
+            <p></p>
+        </div>
+    </div>
+
+    
+</body>
+</html>
