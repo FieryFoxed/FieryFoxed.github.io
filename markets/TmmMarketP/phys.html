@@ -7,7 +7,10 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f0f0f0;
+            background-image: url(../../images/bliuebackground.jpg);
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
         }
         
         #navbar {
@@ -95,10 +98,12 @@
             font-size: 18px;
             margin-top: 0;
             margin-bottom: 10px;
+            color: #fff;
         }
         
         .content {
             display: none;
+            color: #fff;
         }
         
         .section:hover .content {
@@ -191,36 +196,112 @@
 </head>
 <body>
     <div id="navbar">
-        <h1>Welcome to the TMM Markets</h1>
+        <h1>Welcome to the TMM Archive</h1>
         <div class="nav-buttons">
-            <button onclick="window.location.href='../index.html'">Home</button>
+            <button onclick="window.location.href='../../index.html'">Home</button>
         </div>
         <input type="text" id="searchBar" placeholder="Search..." onkeyup="search()">
     </div>
     
-    <div class="sections-container">
-        <div class="large-box">
-            <h1 style="text-align: center;">Physical Augments</h1>
-            <div style="display: flex; margin-left: 27%;">
-                <div class="section">
-                    <div class="section-title"><a href="TmmMarketP/phys.html">Physical Augments</a></div>
+    <div style="background-color: rgb(125, 125, 125); border: 10px slategray; border-style: groove; margin: 50px;">
+        <div class="sections-container">
+            <div class="large-box" style="background-color: slategray;">
+                <h1 style="text-align: center; color: rgb(255, 255, 255);">Physical Cybernetics</h1>
+
+
+                <div class="large-box-title" style="color: rgb(255, 255, 255);">Conversions (Required for Cybernetic Augments)</div>
+    
+                <div class="section" style="background-color: silver;">
+                    <div class="section-title" style="font-size: 16px;">Full Cybernetic Conversion </div>
+                    <div class="content">
+                        <p>Fully convert to Cybernetics, adds 2 AC and 6 free Cybernetic Augment slots</p>
+                        <p style=" text-align: right;">2000 C or 5 Ac</p>
+                    </div>
+                </div>
+    
+                <div class="section" style="background-color: silver;">
+                    <div class="section-title">Arm/Leg Converion</div>
+                    <div class="content">
+                        <p>.25 AC and 1 Arm/Leg Augment slot</p>
+                        <p style=" text-align: right;">400 C or 1 Ac</p>
+                    </div>
                 </div>
                 
-                <div class="section">
-                    <div class="section-title"><a href="TmmMarketP/gen.html">Genetic Augments</a></div>
+                <div class="section" style="background-color: silver;">
+                    <div class="section-title">Torso Conversion</div>
+                    <div class="content">
+                        <p>1 AC and 1 Torso Augment slot</p>
+                        <p style=" text-align: right;">cost</p>
+                    </div>
+                </div>
+    
+                <div class="section" style="background-color: silver;">
+                    <div class="section-title">Visor Addition</div>
+                    <div class="content">
+                        <p>1 visor Augmentation slot</p>
+                        <p style=" text-align: right;">200 C or 1 Ac</p>
+                    </div>
                 </div>
             </div>
 
+
+            <div class="large-box-title" style="color: rgb(255, 255, 255);">Visor Augmentations</div>
+
+            <div class="large-box" style="background-color: slategray;">
+                <div class="section" style="background-color: silver;">
+                    <div class="section-title">Enhancement Visor</div>
+                    <div class="content">
+                        <p style="padding-bottom: 10px;">Offers the <a href="../../ArchiveEx/InfromationPages.html/weakps.html">weakpoint system</a> advanced range (500ft)</p>
+                        <p style=" text-align: right;">cost</p>
+                    </div>
+                </div>
+    
+                <div class="section" style="background-color: silver;">
+                    <div class="section-title">name</div>
+                    <div class="content">
+                        <p style="padding-bottom: 10px;">desc</p>
+                        <p style=" text-align: right;">cost</p>
+                    </div>
+                </div>
+    
+                <div class="section" style="background-color: silver;">
+                    <div class="section-title">name</div>
+                    <div class="content">
+                        <p style="padding-bottom: 10px;">desc</p>
+                        <p style=" text-align: right;">cost</p>
+                    </div>
+                </div>
+    
+                <div class="section" style="background-color: silver;">
+                    <div class="section-title">name</div>
+                    <div class="content">
+                        <p style="padding-bottom: 10px;">desc</p>
+                        <p style=" text-align: right;">cost</p>
+                    </div>
+                </div>
+    
+                <div class="section" style="background-color: silver;">
+                    <div class="section-title">name</div>
+                    <div class="content">
+                        <p style="padding-bottom: 10px;">desc</p>
+                        <p style=" text-align: right;">cost</p>
+                    </div>
+                </div>
+    
+                <div class="section" style="background-color: silver;">
+                    <div class="section-title">name</div>
+                    <div class="content">
+                        <p style="padding-bottom: 10px;">desc</p>
+                        <p style=" text-align: right;">cost</p>
+                    </div>
+                </div>
+            </div>
+    
         </div>
     </div>
 
-    
+
+
+
 </body>
 </html>
-
-
-
-
-
-
-

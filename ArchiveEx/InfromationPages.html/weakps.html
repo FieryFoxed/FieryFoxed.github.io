@@ -4,33 +4,10 @@
     <title>TMM Archive</title>
     <style>
         body {
-
+            font-family: Arial, sans-serif;
             margin: 0;
-            background-color: #f0f0f0;
+            padding: 0;
         }
-
-        .bar {
-            width: 200px;
-            height: 30px;
-            border-radius: 5px;
-            background-color: #3498db;
-            color: white;
-            text-align: center;
-            line-height: 30px;
-            cursor: pointer;
-            
-        }
-
-        .box {
-            display: none;
-            width: 200px;
-            padding: 10px;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            margin-top: 10px;
-        }
-
         
         #navbar {
             background-color: #333;
@@ -150,45 +127,27 @@
             }
             return false;
         }
-
-
-        function toggleBox() {
-        var box = document.getElementById('infoBox');
-        box.style.display = box.style.display === 'block' ? 'none' : 'block';
-        }
-
-        function toggleBoxT() {
-        var box = document.getElementById('infoBoxT');
-        box.style.display = box.style.display === 'block' ? 'none' : 'block';
-        }
     </script>
 </head>
 <body>
     <div id="navbar">
         <h1>Welcome to the TMM Archive</h1>
         <div class="nav-buttons">
-            <button onclick="window.location.href='../index.html'">Home</button>
+            <button onclick="window.location.href='../../../index.html'">Home</button>
+            <button onclick="window.location.href='../../../archive.html'">Archive</button>
         </div>
         <input type="text" id="searchBar" placeholder="Search..." onkeyup="search()">
     </div>
     
+    <div class="section">
+        <h2>Weakpoint System</h2>
+        <div class="content">
+            <p>
+                The weakpoint system is an ability / buff offered through multiple systems in the multiverse. As a base effect, the players critical hit requirement is reduced to a 19, however, the hit must still beat the targets AC. If this effect is doubled in any way, the requirment for a crit is reduced by one per each time it is doubled.
+            </p>
 
-    <div style=" width: 100%;">
-        <div class="bar" onclick="toggleBox()" style="width: 50%; margin-left: 25%; margin-top: 5%; height: 85px; display: flex; background-color: purple;"><img src="../images/ascentionist.png" alt="nan" style="width: 70px; height: 70px; padding-top: 1%; padding-left: 8px;"><b style="padding-left: 10px; color: rgb(255, 210, 252); margin-top: 23px; font-size: 27px;">ASCENTIONIST</b></div>
-        <div class="box" id="infoBox" style="margin-left: 24%; width: 50%;">
-            <p>The Ascentionists encompass all of the technological advancements made in the field of Structural and metaphysical augmentation. Morphing, the mind, body, and spirit, Ascentionists surpass their mortal limitations and push their way to ascending past the mortal coils.</p>
-            <a href="../Files/Ascentionist.pdf" target="_blank" style="color: violet;">Ascentionist Homebrewed File</a>
+            <p>Reference <a href="../../markets/TmmMarketP/phys.html">Augment Market</a> and <a href="../../markets/TmmMarketP/nuerologicalA.html">Nuerological Augments</a> for augments pertaining to the Weakpoint system</p>
         </div>
     </div>
-
-    <div style=" width: 100%;">
-        <div class="bar" onclick="toggleBoxT()" style="width: 50%; margin-left: 25%; margin-top: 5%; height: 85px; display: flex; background-color: rgb(33, 170, 185);"><img src="../images/synthetictechnocracy.jpg" alt="nan" style="width: 70px; height: 70px; padding-top: 1%; padding-left: 8px;"><b style="padding-left: 10px; color: rgb(255, 255, 255); margin-top: 23px; font-size: 27px;">TECHNOCRAT</b></div>
-        <div class="box" id="infoBoxT" style="margin-left: 24%; width: 50%;">
-            <p>The Technocrats encompass the scientists and innovative minds found regularly in all aspects of the multiverse. Masters of crafting and tinkering, they often take up specific fields, becoming experts in them and surpassing all others in the quality of their creations.            </p>
-            <a href="../Files/Technocrat.pdf" target="_blank" style="color: rgb(0, 225, 255);">Technocrat Homebrewed File</a>
-        </div>
-    </div>
-    
-
 </body>
 </html>

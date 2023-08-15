@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TMM Archive</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        #navbar {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        #navbar h1 {
+            margin: 0;
+            display: inline;
+        }
+        
+        #navbar .nav-buttons {
+            display: flex;
+            align-items: center;
+        }
+        
+        #navbar .nav-buttons button {
+            margin-left: 10px;
+            background-color: transparent;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 5px 10px;
+            border-radius: 3px;
+            transition: background-color 0.3s;
+        }
+        
+        #navbar .nav-buttons button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        #searchBar {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            padding: 5px;
+            width: 300px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .section {
+            margin-bottom: 20px;
+        }
+        
+        .content {
+            margin-left: 20px;
+        }
+    </style>
+    <script>
+        function search() {
+            var input, sections, section, i, content, txtValue, searchTerm;
+            input = document.getElementById('searchBar');
+            searchTerm = input.value.toLowerCase();
+            sections = document.getElementsByClassName('section');
+            
+            for (i = 0; i < sections.length; i++) {
+                section = sections[i];
+                content = section.getElementsByClassName('content')[0];
+                txtValue = content.textContent || content.innerText;
+                
+                // Perform fuzzy search using Levenshtein distance algorithm
+                if (fuzzyMatch(txtValue.toLowerCase(), searchTerm)) {
+                    section.style.display = '';
+                } else {
+                    section.style.display = 'none';
+                }
+            }
+        }
+        
+        // Function to calculate Levenshtein distance between two strings
+        function levenshteinDistance(a, b) {
+            if (a.length === 0) return b.length;
+            if (b.length === 0) return a.length;
+        
+            var matrix = [];
+        
+            // Initialize matrix
+            for (var i = 0; i <= b.length; i++) {
+                matrix[i] = [i];
+            }
+        
+            for (var j = 0; j <= a.length; j++) {
+                matrix[0][j] = j;
+            }
+        
+            // Calculate Levenshtein distance
+            for (var i = 1; i <= b.length; i++) {
+                for (var j = 1; j <= a.length; j++) {
+                    if (b.charAt(i - 1) === a.charAt(j - 1)) {
+                        matrix[i][j] = matrix[i - 1][j - 1];
+                    } else {
+                        matrix[i][j] = Math.min(
+                            matrix[i - 1][j - 1] + 1, // substitution
+                            matrix[i][j - 1] + 1,     // insertion
+                            matrix[i - 1][j] + 1      // deletion
+                        );
+                    }
+                }
+            }
+        
+            return matrix[b.length][a.length];
+        }
+        
+        // Function to perform fuzzy search
+        function fuzzyMatch(str, searchTerm) {
+            var words = str.split(' ');
+            for (var i = 0; i < words.length; i++) {
+                if (levenshteinDistance(words[i], searchTerm) <= 2) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    </script>
+</head>
+<body>
+    <div id="navbar">
+        <h1>Welcome to the TMM Archive</h1>
+        <div class="nav-buttons">
+            <button onclick="window.location.href='../index.html'">Home</button>
+        </div>
+        <input type="text" id="searchBar" placeholder="Search..." onkeyup="search()">
+    </div>
+
+    
+    <div class="section">
+        <h2>Homebrewed Ability Score Improvement (HBASI) :</h2>
+        <div class="content">
+            <p>Increase a HBAS by 1</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Proficiency :</h2>
+        <div class="content">
+            <p>gain proficiency in a Homebrewed Skill.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Section 2</h2>
+        <div class="content">
+            <p>This is the content of section 2.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Section 2</h2>
+        <div class="content">
+            <p>This is the content of section 2.</p>
+        </div>
+    </div>
+    
+
+</body>
+</html>
