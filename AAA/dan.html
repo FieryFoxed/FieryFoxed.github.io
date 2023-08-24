@@ -1,352 +1,119 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Your Pretty Website</title>
-  <style>
-    .necromancy-section {
-      background-color: #1a1a1a;
-      color: #fff;
-      padding: 100px 0;
-      text-align: center;
-    }
-    .necromancy-section h2 {
-      font-size: 36px;
-      margin-bottom: 30px;
-      color: #ff9966;
-    }
-    .necromancy-section p {
-      font-size: 18px;
-      margin-bottom: 30px;
-    }
-    .necromancy-image {
-      max-width: 400px;
-      margin: 0 auto;
-    }
-    .testimonial {
-      background-color: #fff;
-      padding: 30px;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-    .testimonial img {
-      width: 80px;
-      border-radius: 50%;
-      margin-bottom: 10px;
-    }
-    .testimonial p {
-      font-style: italic;
-      color: #666;
-    }
-    .contact-info {
-      margin-top: 50px;
-    }
-    .contact-info p {
-      font-size: 18px;
-      margin-bottom: 5px;
-    }
-    .contact-info p strong {
-      font-weight: bold;
-    }
-    .feature-list {
-      display: flex;
-      justify-content: space-around;
-      flex-wrap: wrap;
-    }
-    .feature-item {
-      width: 30%;
-      margin-bottom: 30px;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      overflow: hidden;
-      transition: transform 0.3s ease;
-    }
-    .feature-item img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-    }
-    .feature-item:hover {
-      transform: translateY(-5px);
-    }
-    .hero {
-      background-image: url('hero-bg.jpg');
-      background-size: cover;
-      background-position: center;
-      height: 600px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      color: #fff;
-      text-align: center;
-    }
-    .hero h1 {
-      font-size: 48px;
-      margin-bottom: 20px;
-    }
-    .hero p {
-      font-size: 20px;
-    }
-    .scroll-btn {
-      position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #ff9966;
-      color: #fff;
-      border: none;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 24px;
-      cursor: pointer;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    }
-    .scroll-btn:hover {
-      background-color: #ffcc66;
-    }
-
-    /* Animation */
-    @keyframes fadeInUp {
-      0% {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    .animated {
-      opacity: 0;
-      animation: fadeInUp 1s ease-in-out 0.5s forwards;
-    }
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      line-height: 1.6;
-      margin: 0;
-      padding: 0;
-      background-color: #f7f7f7;
-      color: #333;
-      text-align: center;
-    }
-    header {
-      background-color: #ffcc66;
-      padding: 20px;
-      color: #fff;
-    }
-    nav {
-      background-color: #ff9966;
-      padding: 10px;
-      display: flex;
-      justify-content: center;
-    }
-    nav a {
-      color: #fff;
-      text-decoration: none;
-      margin: 10px;
-      transition: color 0.3s ease;
-    }
-    nav a:hover {
-      color: #ffcc66;
-    }
-    section {
-      padding: 50px;
-      text-align: left;
-    }
-    section h2 {
-      color: #ff9966;
-    }
-    section p {
-      margin-bottom: 20px;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .cta-btn {
-      display: inline-block;
-      background-color: #ff9966;
-      color: #fff;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-      text-decoration: none;
-      transition: background-color 0.3s ease;
-    }
-    .cta-btn:hover {
-      background-color: #ffcc66;
-    }
-    .feature {
-      display: flex;
-      align-items: center;
-      margin-bottom: 30px;
-    }
-    .feature img {
-      width: 100px;
-      border-radius: 50%;
-      margin-right: 20px;
-    }
-    footer {
-      background-color: #333;
-      color: #fff;
-      padding: 10px;
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-    }
-    footer p {
-      margin: 0;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blackjack Game</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+  }
+  #result {
+    font-size: 24px;
+    margin: 20px;
+  }
+</style>
 </head>
 <body>
-  <header>
-    <h1>Welcome to Your Pretty Website</h1>
-  </header>
+<h1>Blackjack Game</h1>
+<p>Click "Deal" to start a new round:</p>
+<button onclick="deal()">Deal</button>
+<button onclick="hit()">Hit</button>
+<button onclick="stand()">Stand</button>
+<p id="result"></p>
 
-  <nav>
-    <a href="#home">Home</a>
-    <a href="#about">About</a>
-    <a href="#services">Services</a>
-    <a href="#contact">Contact</a>
-  </nav>
+<script>
+let playerHand = [];
+let dealerHand = [];
 
-  <div class="hero">
-    <h1>Your Journey Begins Here</h1>
-    <p>Discover a world of possibilities with our exceptional services.</p>
-    <a href="#services" class="cta-btn">Explore Now</a>
-  </div>
-
-  <div class="container">
-    <section id="home">
-      <h2>Home Section</h2>
-      <p>Welcome to our beautiful website! We are thrilled to have you here.</p>
-      <a href="#about" class="cta-btn">Learn More</a>
-    </section>
-
-    <section id="about">
-      <h2>About Section</h2>
-      <p>Learn more about our passionate team and our journey in this exciting field.</p>
-      <div class="feature">
-        <img src="team.jpg" alt="Team" />
-        <p>We're a creative and dedicated team that loves what we do.</p>
-      </div>
-    </section>
-
-    <section id="services">
-      <h2>Services Section</h2>
-      <p>Explore the premium services we offer to help you achieve your goals.</p>
-      <div class="feature">
-        <img src="service1.jpg" alt="Service 1" />
-        <p>Service 1: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-      </div>
-      <div class="feature">
-        <img src="service2.jpg" alt="Service 2" />
-        <p>Service 2: Phasellus auctor tellus vitae tellus consequat, ac facilisis nibh gravida.</p>
-      </div>
-    </section>
-
-    <section id="services">
-        <h2>Services Section</h2>
-        <p>Explore the premium services we offer to help you achieve your goals.</p>
-        <div class="feature-list">
-          <div class="feature-item">
-            <img src="service1.jpg" alt="Service 1" />
-            <h3>Service 1</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          </div>
-          <div class="feature-item">
-            <img src="service2.jpg" alt="Service 2" />
-            <h3>Service 2</h3>
-            <p>Phasellus auctor tellus vitae tellus consequat, ac facilisis nibh gravida.</p>
-          </div>
-          <div class="feature-item">
-            <img src="service3.jpg" alt="Service 3" />
-            <h3>Service 3</h3>
-            <p>Suspendisse vel quam vel erat interdum pellentesque.</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="necromancy-section">
-        <h2>The Enigmatic World of Necromancy</h2>
-        <p>Discover the ancient art of raising the dead and communing with the spirits.</p>
-        <img class="necromancy-image" src="necromancy.jpg" alt="Necromancy" />
-        <p>Unveil the secrets of forgotten rituals and explore the boundary between life and death.</p>
-        <a href="#contact" class="cta-btn">Contact Us for a Mysterious Encounter</a>
-      </section>
-
-      <section id="contact">
-        <h2>Contact Section</h2>
-        <p>Get in touch with us today. We'd love to hear from you!</p>
-        <form>
-          <input type="text" placeholder="Your Name" /><br>
-          <input type="email" placeholder="Your Email" /><br>
-          <textarea placeholder="Your Message"></textarea><br>
-          <button type="submit" class="cta-btn">Send Message</button>
-        </form>
-        <div class="contact-info">
-          <p><strong>Address:</strong> 123 Beautiful Street, Cityville</p>
-          <p><strong>Phone:</strong> +1 (555) 123-4567</p>
-          <p><strong>Email:</strong> info@yourwebsite.com</p>
-        </div>
-      </section>
+function deal() {
+  playerHand = [];
+  dealerHand = [];
+  document.getElementById("result").textContent = "";
   
-      <section id="testimonials">
-        <h2>Testimonials</h2>
-        <div class="testimonial">
-          <img src="testimonial1.jpg" alt="Testimonial 1" />
-          <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut auctor risus nec felis gravida convallis."</p>
-          <p>- John Doe</p>
-        </div>
-        <div class="testimonial">
-          <img src="testimonial2.jpg" alt="Testimonial 2" />
-          <p>"Phasellus auctor tellus vitae tellus consequat, ac facilisis nibh gravida. Nulla facilisi."</p>
-          <p>- Jane Smith</p>
-        </div>
-      </section>
+  playerHand.push(drawCard());
+  playerHand.push(drawCard());
+  
+  dealerHand.push(drawCard(true));
+  
+  displayHands();
+}
 
-    <section id="contact">
-        <h2>Contact Section</h2>
-        <p>Get in touch with us today. We'd love to hear from you!</p>
-        <form>
-          <input type="text" placeholder="Your Name" /><br>
-          <input type="email" placeholder="Your Email" /><br>
-          <textarea placeholder="Your Message"></textarea><br>
-          <button type="submit" class="cta-btn">Send Message</button>
-        </form>
-    </section>
-   </div>
+function drawCard() {
+  const cards = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+  return cards[Math.floor(Math.random() * cards.length)];
+}
 
-  <footer>
-    <p>&copy; Your Name | Year</p>
-  </footer>
+function drawCard(isDealer) {
+  const cards = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+  
+  if (isDealer) {
+    cards.push('10', 'J', 'Q', 'K');
+  }
+  
+  return cards[Math.floor(Math.random() * cards.length)];
+}
 
-  <button class="scroll-btn" onclick="scrollToTop()">&#8593;</button>
-
-  <script>
-    function scrollToTop() {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
+function calculateHandValue(hand) {
+  let value = 0;
+  let hasAce = false;
+  
+  for (const card of hand) {
+    if (card === 'A') {
+      hasAce = true;
+      value += 11;
+    } else if (card === 'K' || card === 'Q' || card === 'J') {
+      value += 10;
+    } else {
+      value += parseInt(card);
     }
+  }
+  
+  if (hasAce && value > 21) {
+    value -= 10;
+  }
+  
+  return value;
+}
 
-    // Detect scroll position and show scroll button when necessary
-    window.addEventListener('scroll', () => {
-      const scrollBtn = document.querySelector('.scroll-btn');
-      if (window.scrollY > 300) {
-        scrollBtn.classList.add('animated');
-      } else {
-        scrollBtn.classList.remove('animated');
-      }
-    });
-  </script>
+function displayHands() {
+  const playerValue = calculateHandValue(playerHand);
+  const dealerValue = calculateHandValue(dealerHand);
+  
+  document.getElementById("result").textContent = `Player's Hand: ${playerHand.join(', ')} (${playerValue})\nDealer's Hand: ${dealerHand.join(', ')} (${dealerValue})`;
+}
+
+function hit() {
+  playerHand.push(drawCard());
+  displayHands();
+  
+  const playerValue = calculateHandValue(playerHand);
+  if (playerValue > 21) {
+    document.getElementById("result").textContent = "Player busts! Dealer wins!";
+  }
+}
+
+function stand() {
+  while (calculateHandValue(dealerHand) < 17) {
+    dealerHand.push(drawCard());
+  }
+  
+  const playerValue = calculateHandValue(playerHand);
+  const dealerValue = calculateHandValue(dealerHand);
+  
+  if (dealerValue > 21 || playerValue > dealerValue) {
+    document.getElementById("result").textContent = "Player wins!";
+  } else if (playerValue < dealerValue) {
+    document.getElementById("result").textContent = "Dealer wins!";
+  } else {
+    document.getElementById("result").textContent = "It's a tie!";
+  }
+}
+</script>
 </body>
 </html>
+
+
+
+
